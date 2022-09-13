@@ -1,0 +1,82 @@
+<ion-header [translucent]="true" class="ion-no-border">
+ <ion-toolbar color="primary" class= "toolbar-title-default md in-toolbar hydrated">
+   <ion-title class="text-3xl pt-4">
+    Pemesanan
+  </ion-title>
+  <ion-buttons slot="end" class="relative">
+    <ion-button>
+      <ion-icon class=" text-3xl" name="print"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+  <div class="absolute -z-1 bg-primary w-full" style=" height: 40vh; bottom: 0px; left: 0px; border-radius: 30px 30px 0px 0px;">
+  </div>
+
+
+  <div class="absolute -z-1 bg-primary w-full" style=" height: 40vh; top: 0px; left: 0px; border-radius: 0px 0px 30px 30px;">
+  </div>
+
+  <div class="flex items-center flex-col" style="margin-bottom: 50px; margin-top: 20px;">
+    <div class="text-on-primary text-sm">Kode Pemesanan</div>
+    <div class="text-on-primary text-xl font-bold">EIJAS128736DSAD</div>
+  </div>
+
+  <div class="flex items-center flex-col">
+    <div class="mb-4 bg-background rounded-lg drop-shadow-lg ion-padding w-full-80">
+      <div class=" flex justify-between">
+      <div class="text-xl font-bold mb-1">Kota Malang</div>
+      <div class="text-sm text-medium "> 23 Januari 2022</div>
+      </div>
+      <div class="text-medium text-sm">Penyedia Jasa</div>
+      <div class="text-xl font-bold">Fernanda Reza</div>
+      <div class="text-medium text-sm">Kota Malang Kec.Lowokwaru</div>
+      <div class="text-medium text-sm">0971287361213</div>
+
+      <hr class= "mt-4 mb-4" style="border-top:1px solid #999;">
+
+      <div>
+        <div class="text-medium text-sm">Pemesan</div>
+        <div class="text-xl font-bold">Anya Geraldine</div>
+        <div class="text-medium text-sm">Perum Permata Jingga</div>
+        <div class="text-medium text-sm">0897382473024</div>
+      </div>
+
+    </div>
+    
+  
+    <div class="bg-background rounded-lg drop-shadow-lg ion-padding w-full-80 mb-4">
+      <div class="font-bold mb-1 text-xl">Detail Harga</div>
+      <div class="text-medium text-sm flex justify-between">
+        <div>Jasa Cukur Rambut</div>
+        <div>Rp. 50.000,-</div>
+      </div>
+      <div class="text-medium text-sm flex justify-between">
+        <div>Transport</div>
+        <div> Rp. 10.000,-</div>
+      </div>
+      <div class="text-medium text-sm flex justify-between">
+        <div>Jumlah Pemesanan</div>
+        <div>2x</div>
+      </div>
+      <hr class= "mt-4 mb-4" style="border-top:1px solid #999;">
+      <div class="font-bold flex justify-between">
+        <div>Total Harga</div>
+        <div class="text-sm">Rp. 100.000,-</div>
+      </div>
+    </div>
+
+    <ion-button color="primary">Chat Tukang Cukur</ion-button>
+
+    <ion-button routerLink="/" class="flex justify-center" color="warning">Tutup</ion-button>
+
+  
+  </div>
+
+
+</ion-content>

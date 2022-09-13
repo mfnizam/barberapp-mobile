@@ -1,0 +1,124 @@
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="-mr-4">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-bold">Ubah Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding-top flex flex-col" style="min-height: 100%;">
+    <div class="flex justify-center z-50">
+      <img src="assets/images/test.webp" class="rounded-full border-primary"
+        style="width: 150px; height: 150px; border-width: 3px; border-style: solid;">
+    </div>
+    <div class="bg-primary text-center w-full ion-padding"
+      style="padding-bottom: 100px; border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
+      <form [formGroup]="profilForm" (submit)="simpan()">
+        <ion-list class="ion-no-padding rounded-lg">
+          <ion-item class="mt-2">
+            <ion-label position="stacked">Nama Lengkap</ion-label>
+            <ion-input formControlName="name" placeholder="Tuliskan Nama Lengkap Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email" placeholder="Tuliskan Email Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Alamat</ion-label>
+            <ion-input formControlName="address" placeholder="Tuliskan AlamatAnda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">No Tlp</ion-label>
+            <ion-input formControlName="phoneNumber" placeholder="Tuliskan No Tlp Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Tgl Lahir</ion-label>
+            <ion-input formControlName="dateBirth" placeholder="Pilih Tgl Lahir Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Jenis Kelamin</ion-label>
+            <ion-input formControlName="gender" placeholder="Pilih Jenis Kelamin Anda"></ion-input>
+          </ion-item>
+          <div class="ion-padding">
+            <ion-button type="submit" mode="ios" color="primary" class="w-full ion-no-margin">
+              <b>Simpan</b>
+            </ion-button>
+          </div>
+        </ion-list>
+      </form>
+    </div>
+  </div>
+
+  <!-- <div class="absolute -z-1 bg-primary w-full"
+    style=" height: 80vh; bottom: 0px; left: 0px; border-radius: 20px 20px 0px 0px;">
+  </div>
+
+  <div class="flex justify-center" style="margin-top: 200px;">
+    <div class="p-2 bg-primary rounded-full" style="width: 100px; height: 100px; margin-top: -140px;">
+      <img class="rounded-full" src="assets/images/test.webp">
+    </div>
+  </div>
+
+  <div class="flex w-full justify-center mt-4" style="margin-top: 20px;">
+    <div class="bg-background rounded-lg drop-shadow-lg ion-padding w-full-80">
+      <div class=" mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-medium text-sm">Nama</div>
+          <div class="">Fernanda Reza</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <div class="mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-medium text-sm">Tanggal Lahir</div>
+          <div class="">23 Desember 2020</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <div class="mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-medium text-sm">Jenis Kelamin</div>
+          <div class="">Laki - Laki</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <div class="mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-medium text-sm">E-mail</div>
+          <div class="">fernandaraw@gmail.com</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <div class="mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-sm text-medium">Alamat</div>
+          <div>Perum Puri Indah Jl Galunggung</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <div class="mb-4 flex justify-between items-center">
+        <div>
+          <div class="text-medium text-sm">No. Handphone</div>
+          <div>08959261327816</div>
+        </div>
+        <div class="text-primary">Ubah</div>
+      </div>
+
+      <ion-button class="flex justify-center" color="warning">Simpan</ion-button>
+
+
+
+
+
+    </div>
+
+  </div> -->
+
+</ion-content>

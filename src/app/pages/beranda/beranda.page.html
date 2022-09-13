@@ -1,0 +1,398 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar class="toolbar-title-default md in-toolbar hydrated">
+    <ion-title class="text-3xl pt-4">
+      Beranda
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="pl-4 pr-4 pt-3">
+    <ion-searchbar mode="ios" color="light" class="ion-no-padding" clearIcon="close-sharp" debounce="100">
+    </ion-searchbar>
+    <div class="flex justify-center pb-3">
+      <div id="modallocation" class="mr-1 ml-1 p-2 pl-3 pr-3 border rounded-full border-primary flex">
+        <div class="mr-1 text-primary flex items-center">
+          <ion-icon name="location"></ion-icon>
+        </div>
+        <div class="flex items-center text-primary">Location</div>
+      </div>
+      <div id="modalstatus" class="mr-1 ml-1 p-2 pl-3 pr-3 border rounded-full border-primary flex">
+        <div class="mr-1 text-primary flex items-center">
+          <div class="truncate flex items-center mr-1">All Status</div>
+          <ion-icon name="chevron-down"></ion-icon>
+        </div>
+      </div>
+      <div id="modalrating" class="mr-1 ml-1 p-2 pl-3 pr-3 border rounded-full border-primary flex">
+        <div class="mr-1 text-primary flex items-center">
+          <div class=" truncate flex items-center mr-1">Rating</div>
+          <ion-icon name="chevron-down"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <div *ngIf="(barbers$ | async) as barbers">
+    <ng-container *ngIf="barbers.length > 0; else noBarbers">
+      <div *ngFor="let barber of barbers; trackBy: trackByFn"
+        class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg"
+        routerLink="/detail-tukang-cukur">
+        <div class="mr-2 text-medium">
+          <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+        </div>
+        <div class="flex-1">
+          <div class="font-bold text-xl">{{ berber.name }}</div>
+          <div class="text-medium">{{ barber.address }}</div>
+          <div class="flex">
+            <div class="mr-2 text-medium">Buka:</div>
+            <div>09.00 - 21.00</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">Buka</div>
+          <div class="text-xl">50K</div>
+          <div class="flex justify-end">
+            <div class="mr-1 text-warning">
+              <ion-icon name="star"></ion-icon>
+            </div>
+            <div>4.9</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noBarbers>
+      <div class="ion-text-center text-medium">Tidak ada barber di wilayah anda</div>
+    </ng-template>
+  </div>
+
+
+  <!-- <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
+    <div class="mr-2 text-medium">
+      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-xl">Supardi</div>
+      <div class="text-medium">Malang Kabupaten</div>
+      <div class="flex">
+        <div class="mr-2 text-medium">
+          Buka:
+        </div>
+        <div>09.00 -21.00</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div>
+        <div class="p-2 pt-1 pb-1 bg-danger text-on-primary text-center rounded-full">
+          Tutup
+        </div>
+      </div>
+      <div class="text-xl">50K</div>
+      <div class="flex justify-end">
+        <div class="mr-1 text-warning">
+          <ion-icon name="star"></ion-icon>
+        </div>
+        <div>
+          4.9
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
+    <div class="mr-2 text-medium">
+      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-xl">Alexander</div>
+      <div class="text-medium">Kota Batu</div>
+      <div class="flex">
+        <div class="mr-2 text-medium">
+          Buka:
+        </div>
+        <div>09.00 -21.00</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div>
+        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
+          Buka
+        </div>
+      </div>
+      <div class="text-xl">50K</div>
+      <div class="flex justify-end">
+        <div class="mr-1 text-warning">
+          <ion-icon name="star"></ion-icon>
+        </div>
+        <div>
+          4.9
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
+    <div class="mr-2 text-medium">
+      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-xl">Steven</div>
+      <div class="text-medium">Malang Kota</div>
+      <div class="flex">
+        <div class="mr-2 text-medium">
+          Buka:
+        </div>
+        <div>09.00 -21.00</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div>
+        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
+          Buka
+        </div>
+      </div>
+      <div class="text-xl">50K</div>
+      <div class="flex justify-end">
+        <div class="mr-1 text-warning">
+          <ion-icon name="star"></ion-icon>
+        </div>
+        <div>
+          4.9
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
+    <div class="mr-2 text-medium">
+      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-xl">Mas Tampan</div>
+      <div class="text-medium">Malang Kabupaten</div>
+      <div class="flex">
+        <div class="mr-2 text-medium">
+          Buka:
+        </div>
+        <div>09.00 -21.00</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div>
+        <div class="p-2 pt-1 pb-1 bg-danger text-on-primary text-center rounded-full">
+          Tutup
+        </div>
+      </div>
+      <div class="text-xl">50K</div>
+      <div class="flex justify-end">
+        <div class="mr-1 text-warning">
+          <ion-icon name="star"></ion-icon>
+        </div>
+        <div>
+          4.9
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
+    <div class="mr-2 text-medium">
+      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-xl">Steven</div>
+      <div class="text-medium">Kota Batu</div>
+      <div class="flex">
+        <div class="mr-2 text-medium">
+          Buka:
+        </div>
+        <div>09.00 -21.00</div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div>
+        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
+          Buka
+        </div>
+      </div>
+      <div class="text-xl">50K</div>
+      <div class="flex justify-end">
+        <div class="mr-1 text-warning">
+          <ion-icon name="star"></ion-icon>
+        </div>
+        <div>
+          4.9
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+</ion-content>
+
+
+<ion-modal mode="md" trigger="modalstatus" #modalstatusModal class="no-handle modal-bottom-custom"
+  style="--max-height: 250px;">
+  <ng-template>
+    <ion-header class="ion-no-border drop-shadow-sm">
+      <ion-toolbar>
+        <ion-title class="ion-no-padding">All Status</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modalstatusModal.dismiss()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            Open
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Close
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="md" trigger="modalrating" class="no-handle modal-bottom-custom" #modalratingModal
+  style="--max-height: 400px;">
+  <ng-template>
+    <ion-header class="ion-no-border drop-shadow-sm">
+      <ion-toolbar>
+        <ion-title class="ion-no-padding">Rating</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modalratingModal.dismiss()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <div class="mr-1 text-warning">
+              <ion-icon name="star"></ion-icon>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <div class="flex">
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <div class="flex">
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <div class="flex">
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <div class="flex">
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+              <div class="mr-1 text-warning">
+                <ion-icon name="star"></ion-icon>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="md" trigger="modallocation" #modallocationModal class="no-handle modal-bottom-custom"
+  style="--max-height: 280px;">
+  <ng-template>
+    <ion-header class="ion-no-border drop-shadow-sm">
+      <ion-toolbar>
+        <ion-title class="ion-no-padding">All Status</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modallocationModal.dismiss()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            Malang Kota
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Malang Kabupaten
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Kota Batu
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

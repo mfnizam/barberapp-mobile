@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="h-full flex flex-col gap-4">
+    <div class="flex-1 ion-margin" style="background: url(assets/images/logobarber.svg); background-repeat: no-repeat; background-position: center;">
+      <!-- <img src="assets/images/logobarber.svg" class="drop-shadow-2xl"> -->
+    </div>
+    <div class="ion-padding relative bg-primary" style="margin-top: 210px; padding-top: 0;">
+      <img src="assets/bg-login.svg" alt="" class="absolute w-full left-0" style="top: -270px; object-fit: cover; z-index: -1;">
+      <ion-button mode="ios" color="warning" class="w-full" routerLink="/signin">Signin</ion-button>
+      <div class="text-center text-on-primary mt-2 mb-2">
+        <small>Tidak memiliki akun?</small>
+      </div>
+      <ion-button mode="ios" color="secondary" class="w-full ion-margin-bottom" routerLink="/signup">Signup</ion-button>
+      <hr class="bg-secondary mb-3 mt-2">
+      <div class="text-center text-on-primary mb-2">
+        <small>Ingin Menjadi Mitra?</small>
+      </div>
+      <ion-button mode="ios" color="secondary" class="w-full" routerLink="/signup" [queryParams]="{ isBarber: true }">Signup As Barber</ion-button>
+    </div>
+  </div>
+  <!-- <div>
+    <img src="assets/bg-login.svg" style="background-image: cover; width: 100%; position: absolute; bottom: 0px;">
+  </div>
+  <div style="bottom: 70px; position:absolute; left: 50%; transform: translateX(-50%);">
+    <div class="bg-warning drop-shadow-lg pt-4 pb-4 w-52 text-on-primary rounded-2xl text-center drop-shadow-2xl"
+      routerLink="/signin"> Log In </div>
+    <div class="flex justify-center mt-3 text-sm text-light">Anda tidak mempunyai akun????</div>
+    <div class="bg-secondary drop-shadow-lg pt-4 pb-4 w-52 text-on-primary rounded-2xl text-center drop-shadow-2xl mt-4"
+      routerLink="/signup">Sign Up </div>
+    <div class="bg-secondary drop-shadow-lg pt-4 pb-4 w-52 text-on-primary rounded-2xl text-center drop-shadow-2xl mt-4"
+      routerLink="/signup">Sign Up as Barber</div>
+  </div> -->
+</ion-content>

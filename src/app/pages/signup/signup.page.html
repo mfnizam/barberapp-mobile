@@ -1,0 +1,72 @@
+<ion-content>
+  <div>
+    <div class="relative ion-padding">
+      <img src="assets/images/bg-pojok.svg" class="absolute" style="top: 0px; left: 0; z-index: -1;" [style.width]="isBarber? '300px' : '250px'">
+      <div class="flex mr-2 " style="color: white;" (click)="goBack()">
+        <ion-icon class="text-2xl mr-2 mb-4 ml-2" name="arrow-back-outline"></ion-icon>
+        <div class="text-ml mt-1">Kembali</div>
+      </div>
+      <div class=" text-3xl text-on-primary ml-4" style="margin-top: -10px;">
+        <div>Signup <span *ngIf="isBarber">as</span></div>
+        <div *ngIf="isBarber">Barber</div>
+      </div>
+    </div>
+
+    <div style="position: absolute; bottom: 0px; width: 100%; display: flex; flex-direction: column;">
+      <img src="assets/bg-login.svg" style="background-image: cover; width: 100%;">
+
+      <div class="bg-primary h-56" style="margin-top: -1px;"></div>
+    </div>
+  </div>
+
+  <div style="bottom: 80px; position:absolute; left: 50%; transform: translateX(-50%);">
+
+
+    <form [formGroup]="signupForm" (submit)="signingup()">
+      <ion-list class="warna-box-input bg-none" style="width: 250px;">
+        <div>
+          <div class="text-on-primary text-sm">Masukkan Nama</div>
+          <ion-item class="rounded-xl mb-2">
+            <ion-input formControlName="name" placeholder="Nama" class="ion-text-capitalize"></ion-input>
+          </ion-item>
+        </div>
+
+        <div>
+          <div class="text-on-primary text-sm">Masukkan Alamat</div>
+          <ion-item class="rounded-xl mb-2">
+            <ion-textarea formControlName="address" placeholder="Alamat" class="mt-0"></ion-textarea>
+          </ion-item>
+        </div>
+
+        <div>
+          <div class="text-on-primary text-sm">Masukkan Email</div>
+          <ion-item class="rounded-xl mb-2">
+            <ion-input formControlName="email" placeholder="Email"></ion-input>
+          </ion-item>
+        </div>
+
+        <div>
+          <div class="text-on-primary text-sm">Masukkan Password</div>
+          <ion-item class="rounded-xl mb-2">
+            <ion-input formControlName="password" [type]="showPassword? 'text' : 'password'" placeholder="Password"></ion-input>
+            <ion-icon slot="end" [name]="showPassword? 'eye-off' : 'eye'" class="ion-no-margin" (click)="showPassword = !showPassword"></ion-icon>
+          </ion-item>
+        </div>
+
+        <div>
+          <div class="text-on-primary text-sm">Ulangi Password</div>
+          <div>
+            <ion-item class="rounded-xl mb-3">
+              <ion-input formControlName="passwordConfirmation"  [type]="showPassword? 'text' : 'password'" placeholder="Ulangi Password"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </ion-list>
+
+      <button class="bg-warning w-full drop-shadow-lg pt-3 pb-3 text-on-primary rounded-xl text-center drop-shadow-xl">Daftar {{ isBarber? 'Sebagai Barber' : ''}}</button>  
+    </form>
+  </div>
+
+
+
+</ion-content>

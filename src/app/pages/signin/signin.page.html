@@ -1,0 +1,47 @@
+<ion-header>
+  <!--  <ion-toolbar>
+    <ion-title>signin</ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+
+  <div class="">
+    <img style="width: 250px;" src="assets/images/bg-pojok.svg">
+    <div class="flex mr-2 " style="margin-top:-133px; color: white;" routerLink="/login">
+      <div>
+        <ion-icon class="text-2xl mr-2 mb-4 ml-2" name="arrow-back-outline"></ion-icon>
+      </div>
+      <div class="text-ml mt-1">
+        Kembali
+      </div>
+    </div>
+    <div class=" text-3xl text-on-primary ml-4" style="margin-top: -10px;">Masuk</div>
+  </div>
+
+  <div style="position: absolute; bottom: 0px; width: 100%; display: flex; flex-direction: column;">
+
+    <img src="assets/bg-login.svg" style="background-image: cover; width: 100%;">
+
+    <div class="bg-primary h-20" style="margin-top: -1px;"></div>
+  </div>
+
+  <div style="bottom: 100px; position:absolute; left: 50%; transform: translateX(-50%);" class=" justify-center">
+    <form [formGroup]="signinForm" (submit)="signingin()">
+      <ion-list class="warna-box-input bg-none" style="width: 250px;">
+        <ion-item class="rounded-xl mb-3">
+          <ion-input formControlName="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-item class="rounded-xl mb-3">
+          <ion-input formControlName="password" [type]="showPassword? 'text' : 'password'" placeholder="Password">
+          </ion-input>
+          <ion-icon [name]="showPassword? 'eye-off' : 'eye'" (click)="showPassword = !showPassword"></ion-icon>
+        </ion-item>
+      </ion-list>
+      <button type="submit" class="w-full bg-warning pt-3 pb-3 text-on-primary rounded-xl text-center">Masuk</button>
+    </form>
+  </div>
+
+
+
+</ion-content>
