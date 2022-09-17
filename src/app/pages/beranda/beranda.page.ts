@@ -11,7 +11,7 @@ import { BerandaService } from './beranda.service';
 })
 export class BerandaPage  {
   // TODO: buat search dengan form builder
-  searchForm = '';
+  searchForm = "";
   barbers$: Observable<User[]> = new BehaviorSubject<User[]>([] as User[]);
 
   constructor(
@@ -25,7 +25,7 @@ export class BerandaPage  {
       console.log(res)
     }, (err: ErrorResponse) => {
       console.log(err)
-      // this.showToast(err.error.message)
+      this.showToast(err.error.message)
     })
   }
 

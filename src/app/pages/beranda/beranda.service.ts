@@ -22,7 +22,7 @@ export class BerandaService {
 
   getBarbers({ name, sortBy = 'name', limit = 10, page = 1 }: GetBarbersParameter): Observable<GetBarbersResponse> {
     return this.http.get<GetBarbersResponse>(environment.serverUrl + '/barbers', { params: {
-      name: name? JSON.stringify({ $regex: name, $options: 'i' }) : '',
+      ...name? { name: JSON.stringify({ $regex: name, $options: 'i' })} : {},
       sortBy, 
       limit, 
       page,
