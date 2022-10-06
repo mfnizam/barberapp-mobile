@@ -9,23 +9,23 @@ const routes: Routes = [
     children: [
       {
         path: 'beranda',
-        loadChildren: () => import('./beranda/beranda.module').then(m => m.BerandaPageModule)
+        loadChildren: () => import('./public/beranda/beranda.module').then(m => m.BerandaPageModule),
       },
       {
         path: 'pesanan',
-        loadChildren: () => import('./pesanan/pesanan.module').then(m => m.PesananPageModule)
+        loadChildren: () => import('./public/pesanan/pesanan.module').then(m => m.PesananPageModule)
       },
       {
         path: 'riwayat',
-        loadChildren: () => import('./riwayat/riwayat.module').then(m => m.RiwayatPageModule)
+        loadChildren: () => import('./public/riwayat/riwayat.module').then(m => m.RiwayatPageModule)
       },
       {
         path: 'profil',
-        loadChildren: () => import('./profil/profil.module').then(m => m.ProfilPageModule)
+        loadChildren: () => import('./public/profil/profil.module').then(m => m.ProfilPageModule)
       },
       {
         path: '',
-        redirectTo: '/beranda',
+        redirectTo: 'beranda',
         pathMatch: 'full'
       }
     ]
@@ -35,6 +35,8 @@ const routes: Routes = [
     redirectTo: '/beranda',
     pathMatch: 'full'
   }
+
+
 ];
 
 @NgModule({

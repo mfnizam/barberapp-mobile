@@ -33,6 +33,7 @@ export class AuthService {
     await this.storage.remove('accessToken');
     await this.storage.remove('refreshToken');
     await this.storage.remove('user');
+    // TODO: add remove barber from berandaService
 
     this.authenticated = false;
     this.user.user = {} as User;

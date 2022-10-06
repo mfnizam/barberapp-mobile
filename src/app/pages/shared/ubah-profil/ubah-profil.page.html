@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="-mr-4">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-bold">Ubah Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding-top flex flex-col" style="min-height: 100%;">
+    <div class="flex justify-center z-50">
+      <img src="assets/images/test.webp" class="rounded-full border-primary"
+        style="width: 150px; height: 150px; border-width: 3px; border-style: solid;">
+    </div>
+    <div class="bg-primary text-center w-full ion-padding"
+      style="padding-bottom: 100px; border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
+      <form [formGroup]="profilForm" (submit)="update()">
+        <ion-list class="ion-no-padding rounded-lg">
+          <ion-item class="mt-2">
+            <ion-label position="stacked">Nama Lengkap</ion-label>
+            <ion-input formControlName="name" placeholder="Tuliskan Nama Lengkap Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email" placeholder="Tuliskan Email Anda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Alamat</ion-label>
+            <ion-input formControlName="address" placeholder="Tuliskan AlamatAnda"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">No Tlp</ion-label>
+            <ion-input formControlName="phoneNumber" type="tel" placeholder="Tuliskan No Tlp Anda"></ion-input>
+          </ion-item>
+          <ion-item (click)="tglModal.present()">
+            <ion-label position="stacked">Tgl Lahir</ion-label>
+            <ion-input [value]="profilForm.get('dateOfBirth')?.value | date:'dd MMMM yyyy'"
+              placeholder="Pilih Tgl Lahir Anda"></ion-input>
+          </ion-item>
+
+          <ion-modal #tglModal trigger="tglModal" class="items-end" style="--height: 406px;">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start" class="-mr-4">
+                    <ion-button (click)="tglModal.dismiss()">
+                      <ion-icon slot="icon-only" name="close"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-title>Pilih Tanggal Lahir</ion-title>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+                <ion-datetime mode="md" [max]="maxTgl" presentation="date" formControlName="dateOfBirth" locale="id-ID"
+                  class="max-w-full w-full" (ionChange)="tglModal.dismiss()"></ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+          <ion-item>
+            <ion-label position="stacked">Jenis Kelamin</ion-label>
+            <!-- <ion-input formControlName="gender" placeholder="Pilih Jenis Kelamin Anda"></ion-input> -->
+            <ion-select formControlName="gender" [interfaceOptions]="{ mode: 'ios' }" 
+              okText="Pilih" cancelText="Batal" class="mb-px" placeholder="Pilih Jenis Kelamin Anda">
+              <ion-select-option [value]="1">Laki - laki</ion-select-option>
+              <ion-select-option [value]="0">Perempuan</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding">
+            <ion-button type="submit" mode="ios" color="primary" class="w-full ion-no-margin">
+              <b [class.opacity-0]="updateLoading">Simpan</b>
+              <ion-spinner [class.opacity-0]="!updateLoading" class="absolute"></ion-spinner>
+            </ion-button>
+          </div>
+        </ion-list>
+      </form>
+    </div>
+  </div>
+</ion-content>

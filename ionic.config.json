@@ -1,7 +1,8 @@
 {
   "name": "GoBarber",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

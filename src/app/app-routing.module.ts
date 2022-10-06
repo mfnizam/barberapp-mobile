@@ -9,40 +9,41 @@ const routes: Routes = [
   },
   {
     path: 'signin',
-    loadChildren: () => import('./pages/signin/signin.module').then( m => m.SigninPageModule)
+    loadChildren: () => import('./pages/auth/signin/signin.module').then( m => m.SigninPageModule)
   },
   {
     path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
+    loadChildren: () => import('./pages/auth/signup/signup.module').then( m => m.SignupPageModule)
   },
   {
     path: 'ubah-profil',
-    loadChildren: () => import('./pages/ubah-profil/ubah-profil.module').then( m => m.UbahProfilPageModule),
+    loadChildren: () => import('./pages/shared/ubah-profil/ubah-profil.module').then( m => m.UbahProfilPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'detail-pemesanan',
-    loadChildren: () => import('./pages/detail-pemesanan/detail-pemesanan.module').then( m => m.DetailPemesananPageModule),
+    loadChildren: () => import('./pages/shared/detail-pemesanan/detail-pemesanan.module').then( m => m.DetailPemesananPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'detail-tukang-cukur',
-    loadChildren: () => import('./pages/detail-tukang-cukur/detail-tukang-cukur.module').then( m => m.DetailTukangCukurPageModule),
+    loadChildren: () => import('./pages/shared/detail-tukang-cukur/detail-tukang-cukur.module').then( m => m.DetailTukangCukurPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pesan-sekarang',
-    loadChildren: () => import('./pages/pesan-sekarang/pesan-sekarang.module').then( m => m.PesanSekarangPageModule),
+    loadChildren: () => import('./pages/shared/pesan-sekarang/pesan-sekarang.module').then( m => m.PesanSekarangPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: '',
     loadChildren: () => import('./pages/tabs.module').then(m => m.TabsPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard]
   },
   {
     path: '**',
-    redirectTo: 'beranda'
+    redirectTo: ''
   }
 
 ];

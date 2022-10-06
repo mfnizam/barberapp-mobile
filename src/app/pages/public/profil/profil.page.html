@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar>
+    <ion-title class="text-bold">Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="padding-bottom: 100px;">
+  <div *ngIf="profil$ | async as profil" class="ion-padding-top flex flex-col" style="min-height: 100%;">
+    <div class="flex justify-center z-50">
+      <img src="assets/images/test.webp" class="rounded-full border-primary" style="width: 150px; height: 150px; border-width: 3px; border-style: solid;">
+    </div>
+    <div class="bg-primary text-center w-full ion-padding" style="padding-bottom: 100px; border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
+      <div class="text-on-primary ion-margin-bottom">
+        <div class="text-sm ion-text-uppercase">ID {{profil.id}}</div>
+        <div class="text-2xl font-bold ion-text-capitalize">{{profil.name}}</div>
+      </div>
+      <ion-list class="ion-no-margin rounded-lg">
+        <ion-item lines="none" class="mt-2">
+          <ion-label position="stacked">Email</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.email}}</div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Alamat</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.address}}</div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">No Tlp</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.phoneNumber || '-'}}</div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Tgl Lahir</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{(profil.dateOfBirth | date:'dd MMMM YYYY') || '-'}}</div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Jenis Kelamin</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.gender < 0? '-' : profil.gender? 'Laki - Laki' : 'Perempuan'}}</div>
+        </ion-item>
+        <div class="ion-padding">
+          <ion-button mode="ios" fill="outline" color="bg-primary" class="w-full ion-no-margin" routerLink="/ubah-profil">
+            <b>Ubah Data Profil</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
+          </ion-button>  
+        </div>
+      </ion-list>
+      <ion-button mode="ios" color="warning" class="w-full ion-no-margin ion-margin-top " (click)="signingout()">
+        <b>Keluar</b> <ion-icon name="log-out-outline" class="ml-2"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
