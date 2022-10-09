@@ -9,12 +9,12 @@
     <div class="flex justify-center z-50">
       <img src="assets/images/test.webp" class="rounded-full border-primary" style="width: 150px; height: 150px; border-width: 3px; border-style: solid;">
     </div>
-    <div class="bg-primary text-center w-full ion-padding" style="padding-bottom: 100px; border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
+    <div class="bg-primary text-center w-full ion-padding" style="border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
       <div class="text-on-primary ion-margin-bottom">
         <div class="text-sm ion-text-uppercase">ID {{profil.id}}</div>
         <div class="text-2xl font-bold ion-text-capitalize">{{profil.name}}</div>
       </div>
-      <ion-list class="ion-no-margin rounded-lg">
+      <ion-list class="ion-no-margin rounded-lg ion-margin-bottom">
         <ion-item lines="none" class="mt-2">
           <ion-label position="stacked">Email</ion-label>
           <div style="min-height: 35px; padding: 8px 0">{{profil.email}}</div>
@@ -37,7 +37,40 @@
         </ion-item>
         <div class="ion-padding">
           <ion-button mode="ios" fill="outline" color="bg-primary" class="w-full ion-no-margin" routerLink="/ubah-profil">
-            <b>Ubah Data Profil</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
+            <b>Ubah Profil</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
+          </ion-button>  
+        </div>
+      </ion-list>
+
+      <ion-list class="ion-no-margin rounded-lg">
+        <h3>Informasi Barber Anda</h3>
+        <ion-item lines="none" class="mt-2">
+          <ion-label position="stacked">Detail</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.detail || '-'}}</div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Jam Kerja</ion-label>
+          <div class="ion-margin-top grid gap-2" style="grid-template-columns: 60px 1fr;">
+            <div>Senin</div>
+            <div>10:00 - 22:00</div>
+            <div>Selasa</div>
+            <div>10:00 - 22:00</div>
+            <div>Rabu</div>
+            <div>10:00 - 22:00</div>
+            <div>Kamis</div>
+            <div>10:00 - 22:00</div>
+            <div>Jumat</div>
+            <div>10:00 - 22:00</div>
+            <div>Sabtu</div>
+            <div>10:00 - 22:00</div>
+            <div>Minggu</div>
+            <div>Tutup</div>
+          </div>
+          <!-- <div style="min-height: 35px; padding: 8px 0">{{profil.address}}</div> -->
+        </ion-item>
+        <div class="ion-padding">
+          <ion-button mode="ios" fill="outline" color="bg-primary" class="w-full ion-no-margin" routerLink="/ubah-barber">
+            <b>Ubah Informasi Barber Anda</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
           </ion-button>  
         </div>
       </ion-list>

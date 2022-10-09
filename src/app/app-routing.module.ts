@@ -21,6 +21,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'ubah-barber',
+    loadChildren: () => import('./pages/shared/ubah-barber/ubah-barber.module').then( m => m.UbahBarberPageModule)
+  },
+  {
     path: 'detail-pemesanan',
     loadChildren: () => import('./pages/shared/detail-pemesanan/detail-pemesanan.module').then( m => m.DetailPemesananPageModule),
     canActivate: [AuthGuard]

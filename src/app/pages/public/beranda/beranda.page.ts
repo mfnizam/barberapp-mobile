@@ -17,7 +17,6 @@ export class BerandaPage {
   searchForm = "";
   barbers$: Observable<User[]> = new BehaviorSubject<User[]>([] as User[]);
 
-
   constructor(
     private beranda: BerandaService,
     private toast: ToastController,
@@ -33,6 +32,20 @@ export class BerandaPage {
           this.showToast(err.error.message)
         })
     }
+    console.log(this.userData.role)
+  }
+
+  activateDeactivate(){
+    // if(!this.userData?.roleDetail) return
+    this.userData.roleDetail = { ...this.userData.roleDetail, active: !this.userData.roleDetail?.active}
+  }
+
+  acceptOrder(orderId: string){
+    console.log(orderId)
+  }
+
+  rejectOrder(orderId: string){
+    console.log(orderId)
   }
 
   async showToast(message = 'Terjadi Kesalahan', color = 'danger') {

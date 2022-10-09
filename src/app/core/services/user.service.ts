@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of, from } from 'rxjs';
 import { User } from '@core/interfaces/user.interface';
 import { StorageService } from './storage.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,13 @@ export class UserService {
 
   async initUser() {
     this.user = await this.getUser();
+    return this.user;
+  }
+
+  roleCheck(): Observable<string> {
+    return from(this.initUser())
+    .pipe(switchMap(user => {
+      return of(user.role)
+    }))
   }
 }

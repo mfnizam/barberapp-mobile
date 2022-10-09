@@ -6,6 +6,12 @@ export interface User {
   phoneNumber  ?: string;
   address       : string;
   email 				: string;
-  role         ?: string;
-  roleDetail   ?: any;
+  role          : string;
+  roleDetail    : Barber; // it can be multiple inteface
+}
+
+export interface Barber {
+  active        : boolean;
+  detail        : string;
+  workingHours  : any;
 }

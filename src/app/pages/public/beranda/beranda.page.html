@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header *ngIf="userData.role == 'user'" class="ion-no-border">
   <ion-toolbar class="toolbar-title-default md in-toolbar hydrated">
     <ion-title class="text-3xl pt-4">
       Beranda
@@ -30,205 +30,143 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div *ngIf="(barbers$ | async) as barbers">
-    <ng-container *ngIf="barbers.length > 0; else noBarbers">
-      <div *ngFor="let barber of barbers; trackBy: trackByFn"
-        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl"
-        routerLink="/detail-tukang-cukur">
-        <div class="flex items-center gap-3">
-          <div class="text-medium">
-            <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
-          </div>
-          <div class="flex-1">
-            <div class="text-xl ion-text-capitalize"><b>{{ barber.name }}</b></div>
-            <div>09.00 - 21.00 <span class="text-danger">(Tutup)</span></div>
-            <div class="text-medium">{{ barber.address }}</div>
-          </div>
-          <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
-        </div>
-        <hr class="bg-light">
-        <div class="flex gap-3 items-center -mb-1">
-          <div class="text-xl flex-1 text-primary"><b>Rp. 50.000,-</b></div>
-          <div class="flex justify-end">
-            <div class="mr-1 text-warning">
-              <ion-icon name="star"></ion-icon>
+<ion-content class="ion-padding">
+  <ng-container [ngSwitch]="userData?.role">
+    <div *ngSwitchCase="'user'">
+      <div *ngIf="(barbers$ | async) as barbers">
+        <ng-container *ngIf="barbers.length > 0; else noBarbers">
+          <div *ngFor="let barber of barbers; trackBy: trackByFn"
+            class="ion-padding bg-background drop-shadow-lg items-center rounded-xl" routerLink="/detail-tukang-cukur">
+            <div class="flex items-center gap-3">
+              <div class="text-medium">
+                <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+              </div>
+              <div class="flex-1">
+                <div class="text-xl ion-text-capitalize"><b>{{ barber.name }}</b></div>
+                <div>09.00 - 21.00 <span class="text-danger">(Tutup)</span></div>
+                <div class="text-medium">{{ barber.address }}</div>
+              </div>
+              <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
             </div>
-            <div>4.9</div>
+            <hr class="bg-light">
+            <div class="flex gap-3 items-center -mb-1">
+              <div class="text-xl flex-1 text-primary"><b>Rp. 50.000,-</b></div>
+              <div class="flex justify-end">
+                <div class="mr-1 text-warning">
+                  <ion-icon name="star"></ion-icon>
+                </div>
+                <div>4.9</div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noBarbers>
+          <div class="ion-text-center text-medium">Tidak ada barber di wilayah anda</div>
+        </ng-template>
+      </div>
+    </div>
+    <div *ngSwitchCase="'barber'" class="h-full flex flex-col gap-3">
+      <div [ngClass]="userData.roleDetail?.active?  'bg-primary' : 'bg-medium'" class="flex items-center ion-padding text-on-primary rounded-xl">
+        <div class="flex-1">
+          <small>Selamat Datang</small>
+          <h4 class="ion-no-margin">Tember Lamberta</h4>
+          <div class="flex items-center gap-2 mt-1">
+            <div [ngClass]="userData.roleDetail?.active? 'bg-success' : 'bg-light'" class="rounded-full" style="height: 10px; width: 10px;"></div>
+            <small>Sedang {{userData.roleDetail?.active? '' : 'Tidak'}} Aktif</small>
           </div>
         </div>
+        <ion-button [ngClass]="userData.roleDetail?.active? 'bg-on-primary' : 'bg-light'" class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
+          <ion-icon slot="icon-only" [color]="userData.roleDetail?.active? 'primary' : 'medium'" name="power" style="font-size: 30pt; margin: 10px;"></ion-icon>
+        </ion-button>
       </div>
-    </ng-container>
-
-    <ng-template #noBarbers>
-      <div class="ion-text-center text-medium">Tidak ada barber di wilayah anda</div>
-    </ng-template>
-  </div>
-
-
-  <!-- <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
-    <div class="mr-2 text-medium">
-      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-xl">Supardi</div>
-      <div class="text-medium">Malang Kabupaten</div>
-      <div class="flex">
-        <div class="mr-2 text-medium">
-          Buka:
+      <div class="ion-text-center ion-padding border border-light rounded-xl">
+        <div class="ion-text-capitalize mb-2">
+          kec. lowokwaru, kota malang
         </div>
-        <div>09.00 -21.00</div>
+        <div class="text-medium">Ubah Alamat</div>
       </div>
-    </div>
-    <div class="text-right">
+      <div class="ion-text-center ion-padding border border-light rounded-xl">
+        <div class="mb-2">Harga Potong Rambut per Orang</div>
+        <h2 class="ion-no-margin text-primary"><b>Rp. 15.000,-</b></h2>
+        <div class="text-medium mt-2">Ubah Harga</div>
+      </div>
       <div>
-        <div class="p-2 pt-1 pb-1 bg-danger text-on-primary text-center rounded-full">
-          Tutup
-        </div>
-      </div>
-      <div class="text-xl">50K</div>
-      <div class="flex justify-end">
-        <div class="mr-1 text-warning">
-          <ion-icon name="star"></ion-icon>
-        </div>
+        <h4><b>Permintaan Pemesanan</b></h4>
         <div>
-          4.9
+          <div *ngFor="let p of [1,2]" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
+            <div class="flex items-center gap-2 ion-margin-bottom">
+              <div class="bg-primary rounded-full" style="height: 50px; width: 50px;"></div>
+              <div class="flex-1">
+                <div>Singgih Jarjid</div>
+                <!-- <div class="text-medium"><small>082445887849</small></div> -->
+                <div class="truncate-2">
+                  <small>Rumah singgih arek sambigede nasional</small>
+                </div>
+              </div>
+            </div>
+            <div class="ion-margin-bottom flex items-center gap-3">
+              <div class="flex-1">
+                <small class="text-medium">Harga</small>
+                <div class="text-primary"><b>Rp. 15.000,-</b></div>
+              </div>
+              <div class="ion-text-right">
+                <small class="text-medium">Jam Janji Temu</small>
+                <div><b>Hari ini, 10:00 AM</b></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <ion-button mode="ios" fill="outline" color="danger" (click)="rejectOrder(p)">Tolak</ion-button>
+              <ion-button mode="ios" color="primary" class="flex-1" (click)="acceptOrder(p)">Terima</ion-button>
+            </div>
+          </div>
         </div>
+        <ng-template #noPermintaan>
+          <div class="text-medium ion-text-center ion-padding border border-light rounded-xl">
+            Tidak ada permintaan pemesanan terbaru
+          </div>
+        </ng-template>
       </div>
-    </div>
-  </div>
-
-  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
-    <div class="mr-2 text-medium">
-      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-xl">Alexander</div>
-      <div class="text-medium">Kota Batu</div>
-      <div class="flex">
-        <div class="mr-2 text-medium">
-          Buka:
-        </div>
-        <div>09.00 -21.00</div>
-      </div>
-    </div>
-    <div class="text-right">
-      <div>
-        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
-          Buka
-        </div>
-      </div>
-      <div class="text-xl">50K</div>
-      <div class="flex justify-end">
-        <div class="mr-1 text-warning">
-          <ion-icon name="star"></ion-icon>
-        </div>
+      <!-- <div class="flex-1 flex items-center justify-center">
         <div>
-          4.9
+          <div class="ion-padding ion-margin-bottom flex border text-primary rounded-full">
+            <ion-icon name="power" style="font-size: 140pt;"></ion-icon>
+          </div>
+          <div class="flex items-center justify-center gap-2">
+            <div class="bg-primary rounded-full" style="height: 15px; width: 15px;"></div> Sedang Aktif
+          </div>
         </div>
-      </div>
+      </div> -->
     </div>
-  </div>
-
-  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
-    <div class="mr-2 text-medium">
-      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
+    <div *ngSwitchDefault>
+      Anda Tidak Dapat Mengakses Halaman Ini
     </div>
-    <div class="flex-1">
-      <div class="font-bold text-xl">Steven</div>
-      <div class="text-medium">Malang Kota</div>
-      <div class="flex">
-        <div class="mr-2 text-medium">
-          Buka:
-        </div>
-        <div>09.00 -21.00</div>
-      </div>
-    </div>
-    <div class="text-right">
-      <div>
-        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
-          Buka
-        </div>
-      </div>
-      <div class="text-xl">50K</div>
-      <div class="flex justify-end">
-        <div class="mr-1 text-warning">
-          <ion-icon name="star"></ion-icon>
-        </div>
-        <div>
-          4.9
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
-    <div class="mr-2 text-medium">
-      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-xl">Mas Tampan</div>
-      <div class="text-medium">Malang Kabupaten</div>
-      <div class="flex">
-        <div class="mr-2 text-medium">
-          Buka:
-        </div>
-        <div>09.00 -21.00</div>
-      </div>
-    </div>
-    <div class="text-right">
-      <div>
-        <div class="p-2 pt-1 pb-1 bg-danger text-on-primary text-center rounded-full">
-          Tutup
-        </div>
-      </div>
-      <div class="text-xl">50K</div>
-      <div class="flex justify-end">
-        <div class="mr-1 text-warning">
-          <ion-icon name="star"></ion-icon>
-        </div>
-        <div>
-          4.9
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-4 flex ion-padding bg-background drop-shadow-lg items-center rounded-lg">
-    <div class="mr-2 text-medium">
-      <ion-icon style="font-size: 65px;" name="person-circle"></ion-icon>
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-xl">Steven</div>
-      <div class="text-medium">Kota Batu</div>
-      <div class="flex">
-        <div class="mr-2 text-medium">
-          Buka:
-        </div>
-        <div>09.00 -21.00</div>
-      </div>
-    </div>
-    <div class="text-right">
-      <div>
-        <div class="p-2 pt-1 pb-1 bg-primary text-on-primary text-center rounded-full">
-          Buka
-        </div>
-      </div>
-      <div class="text-xl">50K</div>
-      <div class="flex justify-end">
-        <div class="mr-1 text-warning">
-          <ion-icon name="star"></ion-icon>
-        </div>
-        <div>
-          4.9
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
+  </ng-container>
 </ion-content>
 
+<!-- <div class="ion-padding border border-light rounded-xl">
+  <div class="flex items-center gap-3">
+    <div class="flex-1">
+      <small class="text-medium">Alamat</small>
+      <div class="ion-text-capitalize text-primary"><b>kec. lowokwaru, kota malang</b> </div>
+    </div>
+    <div class="flex text-medium">
+      <ion-icon name="create-outline" style="font-size: 18pt;"></ion-icon>
+    </div>
+  </div>
+  <hr class="bg-white ion-margin-top">
+  <div class="flex items-center gap-3">
+    <div class="flex-1">
+      <small class="text-medium">Harga Per Orang</small>
+      <div class="ion-text-capitalize text-primary">
+        <b>Rp. 50.000,-</b>
+      </div>
+    </div>
+    <div class="flex text-medium">
+      <ion-icon name="create-outline" style="font-size: 18pt;"></ion-icon>
+    </div>
+  </div>
+</div> -->
 
 <ion-modal mode="md" trigger="modalstatus" #modalstatusModal class="no-handle modal-bottom-custom"
   style="--max-height: 250px;">

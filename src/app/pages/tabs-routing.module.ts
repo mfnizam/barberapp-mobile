@@ -35,8 +35,6 @@ const routes: Routes = [
     redirectTo: '/beranda',
     pathMatch: 'full'
   }
-
-
 ];
 
 @NgModule({

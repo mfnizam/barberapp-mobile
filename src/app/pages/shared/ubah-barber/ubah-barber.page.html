@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="-mr-4">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-bold">Ubah Info Barber</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content color="primary" class="bg-primary">
+  <ion-card class="rounded-lg ion-margin">
+    <form [formGroup]="barberForm" (submit)="update()">
+      <ion-list class="ion-padding rounded-lg">
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">Detail</ion-label>
+          <ion-textarea formControlName="detail" placeholder="Tuliskan Nama Lengkap Anda"></ion-textarea>
+        </ion-item>
+
+        <h6>Jam Kerja</h6>
+
+        <ng-container formArrayName="workingHours">
+          <ng-container *ngFor="let workingHour of workingHours.controls; index as i;">
+            <div class="border border-light rounded-lg ion-margin-bottom">
+              <ion-item [formGroupName]="i" lines="none" style="--background: none;">
+                <ion-label position="stacked">{{dayOfWeek[i]}}</ion-label>
+                <ion-select mode="ios" formControlName="close" placeholder="Pilih buka/tutup">
+                  <ion-select-option [value]="false">Buka</ion-select-option>
+                  <ion-select-option [value]="true">Tutup</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div *ngIf="!workingHours.controls[i].get('close').value" class="w-full grid grid-cols-2 gap-3 ion-padding-start ion-padding-end ion-padding-bottom" style="font-size: 14pt;">
+                <div (click)="openModalHourStart(modalHourStarEnd, i)">
+                  <small class="text-medium">Jam Buka</small>
+                  <div class="text-primary"><b>{{workingHours.controls[i].get('hourStart').value | date:'HH:mm'}}</b></div>
+                </div>
+                <div class="ion-text-right">
+                  <small class="text-medium">Jam Tutup</small>
+                  <div class="text-primary"><b>{{workingHours.controls[i].get('hourEnd').value | date:'HH:mm'}}</b></div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ion-button type="submit" mode="ios" color="primary" class="w-full ion-no-margin">
+          <b [class.opacity-0]="updateLoading">Simpan</b>
+          <ion-spinner [class.opacity-0]="!updateLoading" class="absolute"></ion-spinner>
+        </ion-button>
+      </ion-list>
+    </form>
+  </ion-card>
+
+  <ion-modal #modalHourStarEnd class="items-end" style="--height: 341px;" (onDidDismiss)="modalHourStartEndDidDismiss()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start" class="-mr-4">
+            <ion-button (click)="modalHourStarEnd.dismiss()">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Pilih Waktu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-datetime [(ngModel)]="modalHourStartEndValue" presentation="time" locale="id-ID" style="max-width: 100%;"></ion-datetime>
+        <div class="grid grid-cols-2 gap-2 ion-padding">
+          <ion-button mode="ios">Batal</ion-button>
+          <ion-button mode="ios" (click)="selectHourStartEnd(modalHourStarEnd)">Pilih</ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
