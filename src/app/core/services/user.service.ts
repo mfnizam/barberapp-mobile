@@ -24,6 +24,7 @@ export class UserService {
 
   async initUser() {
     this.user = await this.getUser();
+    console.log(this.user)
     return this.user;
   }
 

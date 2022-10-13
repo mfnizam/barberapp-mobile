@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class ProfilPage {
 
   profil$: Observable<User> = new BehaviorSubject<User>({} as User);
+  dayOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamin', 'Jumat', 'Sabtu']
   
   constructor(
     private navCtrl: NavController,

@@ -1,82 +1,113 @@
-<ion-header class="ion-no-border drop-shadow-md">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title class="text-bold">Profil</ion-title>
+    <ion-title class="text-3xl ion-padding">
+      Profil
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content style="padding-bottom: 100px;">
-  <div *ngIf="profil$ | async as profil" class="ion-padding-top flex flex-col" style="min-height: 100%;">
+
+<ion-content class="ion-padding">
+  <div *ngIf="profil$ | async as profil">
     <div class="flex justify-center z-50">
-      <img src="assets/images/test.webp" class="rounded-full border-primary" style="width: 150px; height: 150px; border-width: 3px; border-style: solid;">
+      <img src="assets/images/test.webp" class="rounded-full" style="width: 120px; height: 120px;">
     </div>
-    <div class="bg-primary text-center w-full ion-padding" style="border-radius: 2rem 2rem 0 0; margin-top: -60px; padding-top: 76px; min-height: 100%; flex-grow: 1;">
-      <div class="text-on-primary ion-margin-bottom">
-        <div class="text-sm ion-text-uppercase">ID {{profil.id}}</div>
-        <div class="text-2xl font-bold ion-text-capitalize">{{profil.name}}</div>
-      </div>
-      <ion-list class="ion-no-margin rounded-lg ion-margin-bottom">
-        <ion-item lines="none" class="mt-2">
-          <ion-label position="stacked">Email</ion-label>
+    <div class="text-2xl ion-text-capitalize ion-margin-top ion-text-center"><b>{{profil.name}}</b></div>
+    <div class="ion-text-center ion-text-uppercase text-medium"><small>ID {{profil.id}}</small></div>
+    <ion-card mode="ios" class="border border-primary ion-no-margin ion-margin-top rounded-xl">
+      <ion-list>
+        <ion-item class="ion-margin-end mt-2">
+          <ion-label position="stacked" color="medium">Email</ion-label>
           <div style="min-height: 35px; padding: 8px 0">{{profil.email}}</div>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label position="stacked">Alamat</ion-label>
+        <ion-item class="ion-margin-end">
+          <ion-label position="stacked" color="medium">Alamat</ion-label>
           <div style="min-height: 35px; padding: 8px 0">{{profil.address}}</div>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label position="stacked">No Tlp</ion-label>
+        <ion-item class="ion-margin-end">
+          <ion-label position="stacked" color="medium">No Tlp</ion-label>
           <div style="min-height: 35px; padding: 8px 0">{{profil.phoneNumber || '-'}}</div>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label position="stacked">Tgl Lahir</ion-label>
+        <ion-item class="ion-margin-end">
+          <ion-label position="stacked" color="medium">Tgl Lahir</ion-label>
           <div style="min-height: 35px; padding: 8px 0">{{(profil.dateOfBirth | date:'dd MMMM YYYY') || '-'}}</div>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label position="stacked">Jenis Kelamin</ion-label>
-          <div style="min-height: 35px; padding: 8px 0">{{profil.gender < 0? '-' : profil.gender? 'Laki - Laki' : 'Perempuan'}}</div>
+        <ion-item class="ion-margin-end">
+          <ion-label position="stacked" color="medium">Jenis Kelamin</ion-label>
+          <div style="min-height: 35px; padding: 8px 0">{{profil.gender < 0? '-' : profil.gender? 'Laki - Laki'
+              : 'Perempuan' }}</div>
         </ion-item>
         <div class="ion-padding">
-          <ion-button mode="ios" fill="outline" color="bg-primary" class="w-full ion-no-margin" routerLink="/ubah-profil">
-            <b>Ubah Profil</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
-          </ion-button>  
+          <ion-button mode="ios" class="w-full ion-no-margin" routerLink="/ubah-profil">
+            <b>Ubah Profil</b>
+            <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
+          </ion-button>
         </div>
       </ion-list>
+    </ion-card>
 
-      <ion-list class="ion-no-margin rounded-lg">
-        <h3>Informasi Barber Anda</h3>
-        <ion-item lines="none" class="mt-2">
-          <ion-label position="stacked">Detail</ion-label>
-          <div style="min-height: 35px; padding: 8px 0">{{profil.detail || '-'}}</div>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label position="stacked">Jam Kerja</ion-label>
-          <div class="ion-margin-top grid gap-2" style="grid-template-columns: 60px 1fr;">
-            <div>Senin</div>
-            <div>10:00 - 22:00</div>
-            <div>Selasa</div>
-            <div>10:00 - 22:00</div>
-            <div>Rabu</div>
-            <div>10:00 - 22:00</div>
-            <div>Kamis</div>
-            <div>10:00 - 22:00</div>
-            <div>Jumat</div>
-            <div>10:00 - 22:00</div>
-            <div>Sabtu</div>
-            <div>10:00 - 22:00</div>
-            <div>Minggu</div>
-            <div>Tutup</div>
-          </div>
-          <!-- <div style="min-height: 35px; padding: 8px 0">{{profil.address}}</div> -->
-        </ion-item>
-        <div class="ion-padding">
-          <ion-button mode="ios" fill="outline" color="bg-primary" class="w-full ion-no-margin" routerLink="/ubah-barber">
-            <b>Ubah Informasi Barber Anda</b> <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
-          </ion-button>  
+    <ion-card *ngIf="profil.role === 'barber' && profil.barber?.id" mode="ios" class="border border-primary ion-no-margin ion-margin-top rounded-xl">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Informasi Barber</ion-card-title>
+      </ion-card-header>
+
+      <ion-accordion-group [multiple]="true" [value]="['detail', 'jam', 'ulasan']">
+        <ion-accordion value="detail">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Detail</b></ion-label>
+          </ion-item>
+          <ion-item slot="content">
+            <div class="ion-padding-top ion-padding-bottom">{{profil.barber.detail || '-'}}</div>
+          </ion-item>
+        </ion-accordion>
+        <ion-accordion value="detail">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Harga</b></ion-label>
+          </ion-item>
+          <ion-item slot="content">
+            <div class="ion-padding-top ion-padding-bottom">Rp {{profil.barber.price | number:'2.0'}},-
+            </div>
+            <div slot="end" class="text-medium">Per Orang</div>
+          </ion-item>
+        </ion-accordion>
+        <ion-accordion value="jam">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Jam Kerja</b></ion-label>
+          </ion-item>
+          <ion-list slot="content" class="ion-margin-bottom">
+            <ion-item *ngFor="let j of profil.barber.workingHours">
+              <ion-label>{{dayOfWeek[j.dayOfWeek]}}</ion-label>
+              <ion-label slot="end">
+                <span *ngIf="!j.close; else barberClose">
+                  {{j.hourStart | date:'HH:mm'}} - {{j.hourEnd | date:'HH:mm'}}
+                </span>
+                <ng-template #barberClose>Tutup</ng-template>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+
+      <div class="ion-padding">
+        <ion-button mode="ios" class="w-full ion-no-margin"
+          routerLink="/ubah-barber">
+          <b>Ubah Informasi Barber Anda</b>
+          <ion-icon name="chevron-forward" class="ml-2"></ion-icon>
+        </ion-button>
+      </div>
+      <ng-template #loadingbarber>
+        <div class="ion-text-center"><ion-spinner></ion-spinner> Memuat informasi barber....</div>
+      </ng-template>
+      <ng-template #nobarber>
+        <div class="ion-text-center text-medium">
+          Tidak ada informasi barber
         </div>
-      </ion-list>
-      <ion-button mode="ios" color="warning" class="w-full ion-no-margin ion-margin-top " (click)="signingout()">
-        <b>Keluar</b> <ion-icon name="log-out-outline" class="ml-2"></ion-icon>
-      </ion-button>
-    </div>
+      </ng-template>
+    </ion-card>
+
+    <ion-button mode="ios" color="warning" class="w-full ion-no-margin ion-margin-top " (click)="signingout()">
+      <b>Keluar</b>
+      <ion-icon name="log-out-outline" class="ml-2"></ion-icon>
+    </ion-button>
   </div>
 </ion-content>

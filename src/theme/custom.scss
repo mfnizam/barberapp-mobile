@@ -125,6 +125,7 @@
 .bg-white { background: var( --ion-color-primary-contrast) }
 .bg-medium { background: var(--ion-color-medium) }
 .bg-light { background: var(--ion-color-light); --background: var(--ion-color-light) }
+.bg-light-tint { background: var(--ion-color-light-tint); --background: var(--ion-color-light-tint) }
 .bg-light-shade { background: var(--ion-color-light-shade) }
 .bg-background { background: var(--background); }
 .bg-dark { background: var(--ion-color-dark); }
@@ -207,6 +208,7 @@
 // Border
 .border-0 { border-width: 0;}
 .border { border-width: 1px; border-style: solid; }
+.border-l { border-left-width: 1px; border-left-style: solid; }
 .border-r { border-right-width: 1px; border-right-style: solid; }
 .border-t { border-top-width: 1px; border-top-style: solid; }
 .border-t-4 { border-top-width: 4px; border-top-style: solid; }

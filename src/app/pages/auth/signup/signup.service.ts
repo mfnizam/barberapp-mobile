@@ -19,7 +19,7 @@ export class SignupService {
   ) { }
 
   register(name: string, address: string, email: string, password: string, isBarber: boolean = false){
-    return this.http.post<RegisterResponse>(environment.serverUrl + '/auth/register', { 
+    return this.http.post<RegisterResponse>(environment.serverUrl + '/auth/register' + (isBarber? '/barber' : ''), { 
       name, 
       address, 
       email, 

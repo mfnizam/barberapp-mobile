@@ -30,8 +30,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'detail-tukang-cukur',
-    loadChildren: () => import('./pages/shared/detail-tukang-cukur/detail-tukang-cukur.module').then( m => m.DetailTukangCukurPageModule),
+    path: 'detail-barber',
+    loadChildren: () => import('./pages/shared/detail-barber/detail-barber.module').then( m => m.DetailBarberPageModule),
     canActivate: [AuthGuard]
   },
   {

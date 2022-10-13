@@ -1,0 +1,108 @@
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" class="-mr-4">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-bold">Detail Barber</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="absolute -z-1 bg-primary w-full"
+    style=" width: 150%;height: 25vh; top: 0px; left: -25%; border-radius: 0px 0px 200px 200px;">
+  </div>
+  <div>
+    <div class="flex justify-center">
+      <img class="rounded-full" style="margin-bottom: -55px; width: 110px; height:110px; z-index: 1;" src="assets/images/test.webp">
+    </div>
+
+    <div class="bg-background rounded-xl drop-shadow-lg" style="padding-top: 71px; overflow: hidden;">
+      <div class="text-center" style="margin-bottom: 30px ;">
+        <div class="flex gap-1 justify-center mb-1">
+          <ion-icon *ngFor="let s of [1, 1, 1, 1, 0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+        </div>
+        <div class="text-xl font-bold">Fernanda Reza Aditya</div>
+        <div class="text-medium text-sm">Kota Malang, Kec. Lowokwaru</div>
+        <div class="text-medium text-sm">098182736234</div>
+      </div>
+  
+      <ion-accordion-group [multiple]="true" [value]="['detail', 'jam', 'ulasan']">
+        <ion-accordion value="detail">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Detail</b></ion-label>
+          </ion-item>
+  
+          <ion-list slot="content" class="ion-padding">
+            Menurut Anya, bisnis barbershop dan pangkas rambut tradisional sesungguhnya tak jauh berbeda. Sebab
+            sama-sama menawarkan jasa potong rambut. Hanya, fasilitas dan treatment-nya yang berlainan. Barbershop,
+            merupakan salon potong rambut di ruangan ber-AC dan menawarkan perawatan yang lebih lengkap
+          </ion-list>
+        </ion-accordion>
+        <ion-accordion value="jam">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Jam Kerja</b></ion-label>
+          </ion-item>
+          <ion-list slot="content" class="ion-margin-bottom">
+            <ion-item *ngFor="let j of [0,1,2,3,4,5,6]">
+              <ion-label>{{dayOfWeek[j]}}</ion-label>
+              <ion-label slot="end">09:00 - 21:00</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+        <ion-accordion value="ulasan">
+          <ion-item slot="header" class="bg-light-tint">
+            <ion-label><b>Ulasan</b></ion-label>
+          </ion-item>
+          <ion-list slot="content" class="ion-padding">
+            <div class="ion-margin-bottom">
+              <ion-textarea class="border border-light-shade rounded-xl ion-margin-bottom" placeholder="Tulis Komentarmu" rows="3">
+              </ion-textarea>
+              <div class="ion-text-right">
+                <ion-button mode="ios" class="ion-no-margin" style="width: 120px;">Kirim</ion-button>
+              </div>
+            </div>
+            <!-- <hr class="bg-light"> -->
+            <div class="flex items-center justify-between ion-margin-bottom">
+              <div class="flex items-center gap-1">
+                <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+                <div><small>(23)</small></div>
+              </div>
+              <small>23 Komentar</small>
+            </div>
+            <div class="mb-2">
+            </div>
+            <div>
+              <div class="border border-light-shade rounded-xl ion-padding">
+                <div class="flex items-center gap-3">
+                  <img class="rounded-full" style="width: 50px; height: 50px;" src="assets/images/test.webp">
+                  <div class="flex-1">
+                    <div><b>Budhe</b></div>
+                    <div>
+                      <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+                    </div>
+                    <div class="text-medium"><small>23 Agu 2022</small></div>
+                  </div>
+                </div>
+                <hr>
+                <div>Pelayanannya sangat ramah, harga terjangkau</div>
+              </div>
+            </div>
+          </ion-list>
+        </ion-accordion>
+  
+      </ion-accordion-group>
+    </div>
+
+
+  </div>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-padding">
+      <ion-button mode="ios" class="w-full" color="warning" routerLink="/pesan-sekarang">Pesan Sekarang</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

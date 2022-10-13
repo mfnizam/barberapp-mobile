@@ -36,8 +36,8 @@ export class BerandaPage {
   }
 
   activateDeactivate(){
-    // if(!this.userData?.roleDetail) return
-    this.userData.roleDetail = { ...this.userData.roleDetail, active: !this.userData.roleDetail?.active}
+    // if(!this.userData?.barber) return
+    this.userData.barber = { ...this.userData.barber, active: !this.userData.barber?.active}
   }
 
   acceptOrder(orderId: string){

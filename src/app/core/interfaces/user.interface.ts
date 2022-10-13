@@ -7,11 +7,19 @@ export interface User {
   address       : string;
   email 				: string;
   role          : string;
-  roleDetail    : Barber; // it can be multiple inteface
+  barber    : Barber; // it can be multiple inteface
 }
 
 export interface Barber {
-  active        : boolean;
+  active        ?: boolean;
+  price         : number;
   detail        : string;
   workingHours  : any;
+}
+
+export interface WorkingHours { 
+  dayOfWeek : number,
+  hourStart : number,
+  hourEnd   : number,
+  close     : boolean
 }
