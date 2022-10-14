@@ -37,26 +37,38 @@
         <ng-container *ngIf="barbers.length > 0; else noBarbers">
           <div *ngFor="let barber of barbers; trackBy: trackByFn"
             class="ion-padding bg-background drop-shadow-lg items-center rounded-xl">
-            <div class="flex items-center gap-3" routerLink="/detail-barber">
+            <div class="flex items-center gap-3" [routerLink]="'/detail-barber/' + barber.id">
               <div class="bg-primary rounded-full" style="width: 60px; height: 60px; overflow: hidden;">
                 <img src="assets/images/test.webp" alt="">
               </div>
               <div class="flex-1">
                 <div class="ion-text-capitalize"><b>{{ barber.name }}</b></div>
-                <div><small>09.00 - 21.00 <span class="text-danger">(Tutup)</span></small></div>
+                <div *ngIf="barber.barber?.workingHours[today] as wh;">
+                  <small *ngIf="!wh.close && wh.hourEnd > hourNow; else close">
+                    {{wh.hourStart | date:'HH:mm'}} - {{wh.hourEnd | date:'HH:mm'}}
+                  </small>
+                  <ng-template #close>
+                    <span class="text-danger">(Tutup)</span>
+                  </ng-template>
+                </div>
                 <div class="text-medium"><small>{{ barber.address }}</small></div>
               </div>
               <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
             </div>
             <hr class="bg-light mt-3 mb-3">
             <div class="flex gap-3 items-center -mb-1">
-              <div class="flex-1" routerLink="/detail-barber">
-                <div class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp. 15.000,-</b></div>
+              <div class="flex-1" [routerLink]="'/detail-barber/' + barber.id">
+                <div *ngIf="barber.barber.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
+                    {{price | number:'2.0'}},-</b></div>
+                <ng-template #noPrice>
+                  <div class="text-medium">Belum Tersedia</div>
+                </ng-template>
                 <div class="flex gap-1 items-center">
                   <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
                 </div>
               </div>
-              <ion-button mode="ios" class="w-full ion-no-margin" style="max-width: 150px;" routerLink="/pesan-sekarang">Pesan Sekarang</ion-button>
+              <ion-button mode="ios" [disabled]="!barber.barber.price || barber.barber?.workingHours[5].close || barber.barber?.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
+                [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
             </div>
           </div>
         </ng-container>
@@ -67,17 +79,21 @@
       </div>
     </div>
     <div *ngSwitchCase="'barber'" class="h-full flex flex-col gap-3">
-      <div [ngClass]="userData.barber?.active?  'bg-primary' : 'bg-medium'" class="flex items-center ion-padding text-on-primary rounded-xl">
+      <div [ngClass]="userData.barber?.active?  'bg-primary' : 'bg-medium'"
+        class="flex items-center ion-padding text-on-primary rounded-xl">
         <div class="flex-1">
           <small>Selamat Datang</small>
           <h4 class="ion-no-margin">Tember Lamberta</h4>
           <div class="flex items-center gap-2 mt-1">
-            <div [ngClass]="userData.barber?.active? 'bg-success' : 'bg-light'" class="rounded-full" style="height: 10px; width: 10px;"></div>
+            <div [ngClass]="userData.barber?.active? 'bg-success' : 'bg-light'" class="rounded-full"
+              style="height: 10px; width: 10px;"></div>
             <small>Sedang {{userData.barber?.active? '' : 'Tidak'}} Aktif</small>
           </div>
         </div>
-        <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'" class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
-          <ion-icon slot="icon-only" [color]="userData.barber?.active? 'primary' : 'medium'" name="power" style="font-size: 30pt; margin: 10px;"></ion-icon>
+        <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'"
+          class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
+          <ion-icon slot="icon-only" [color]="userData.barber?.active? 'primary' : 'medium'" name="power"
+            style="font-size: 30pt; margin: 10px;"></ion-icon>
         </ion-button>
       </div>
       <div class="ion-text-center ion-padding border border-light rounded-xl">
@@ -97,7 +113,8 @@
           <div *ngFor="let p of [1]" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
             <div class="flex items-center gap-2 ion-margin-bottom">
               <div class="bg-primary rounded-full" style="height: 50px; width: 50px;">
-                <img class="rounded-full" src="assets/images/test.webp"></div>
+                <img class="rounded-full" src="assets/images/test.webp">
+              </div>
               <div class="flex-1">
                 <div><b>Singgih Jarjid</b></div>
                 <!-- <div class="text-medium"><small>082445887849</small></div> -->
@@ -120,7 +137,8 @@
               <ion-button mode="ios" fill="outline" color="danger" class="ion-no-margin" (click)="rejectOrder(p)">
                 <ion-icon name="close"></ion-icon>
               </ion-button>
-              <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full" (click)="acceptOrder(p)">Terima</ion-button>
+              <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full"
+                (click)="acceptOrder(p)">Terima</ion-button>
             </div>
           </div>
         </div>

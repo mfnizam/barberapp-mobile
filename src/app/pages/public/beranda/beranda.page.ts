@@ -11,7 +11,8 @@ import { BerandaService } from './beranda.service';
   templateUrl: 'beranda.page.html'
 })
 export class BerandaPage {
-  
+  today = new Date().getDay();
+  hourNow = new Date(0).setHours(new Date().getHours(), new Date().getMinutes());
   userData: User = this.user.user;
   
   searchForm = "";
@@ -32,7 +33,6 @@ export class BerandaPage {
           this.showToast(err.error.message)
         })
     }
-    console.log(this.userData.role)
   }
 
   activateDeactivate(){

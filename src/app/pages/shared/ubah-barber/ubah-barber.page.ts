@@ -92,21 +92,28 @@ export class UbahBarberPage {
     modal.present();
     this.modalHourStartEndIndex = i;
     this.modalHourStartEndName = 'hourStart';
+    let hourStart = this.workingHours.controls[i].get('hourStart')?.value;
+    if(hourStart) this.modalHourStartEndValue = new Date(hourStart).toLocaleString('sv').replace(' ', 'T');;
   }
   openModalHourEnd(modal: any, i: number) {
     modal.present();
     this.modalHourStartEndIndex = i;
     this.modalHourStartEndName = 'hourEnd';
+    let hourEnd = this.workingHours.controls[i].get('hourEnd')?.value;
+    if(hourEnd) this.modalHourStartEndValue = new Date(hourEnd).toLocaleString('sv').replace(' ', 'T');;
   }
 
   modalHourStartEndDidDismiss() {
     this.modalHourStartEndIndex = 0;
     this.modalHourStartEndName = 'hourStart';
-    this.modalHourStartEndValue = new Date(0).toLocaleString('sv').replace(' ', 'T');;
+    this.modalHourStartEndValue = new Date(0).toLocaleString('sv').replace(' ', 'T');
   }
 
   selectHourStartEnd(modal: any) {
-    this.workingHours.at(this.modalHourStartEndIndex).get(this.modalHourStartEndName)?.setValue(new Date(this.modalHourStartEndValue).getTime())
+    console.log(this.modalHourStartEndValue)
+    this.workingHours.at(this.modalHourStartEndIndex).get(this.modalHourStartEndName)?.setValue(
+      new Date(this.modalHourStartEndValue).getTime()
+    )
     this.modalHourStartEndValue = new Date(0).toLocaleString('sv').replace(' ', 'T')
     modal.dismiss();
   }

@@ -7,7 +7,7 @@ export interface User {
   address       : string;
   email 				: string;
   role          : string;
-  barber    : Barber; // it can be multiple inteface
+  barber        : Barber; // it can be multiple inteface
 }
 
 export interface Barber {

@@ -30,12 +30,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'detail-barber',
+    path: 'detail-barber/:id',
     loadChildren: () => import('./pages/shared/detail-barber/detail-barber.module').then( m => m.DetailBarberPageModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'pesan-sekarang',
+    path: 'pesan-sekarang/:id',
     loadChildren: () => import('./pages/shared/pesan-sekarang/pesan-sekarang.module').then( m => m.PesanSekarangPageModule),
     canActivate: [AuthGuard]
   },
