@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@core/interfaces/user.interface';
 import { UserService } from '@core/services/user.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { PesanSekarangService } from './pesan-sekarang.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class PesanSekarangPage {
   dayOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamin', 'Jumat', 'Sabtu']
 
   constructor(
+    private navCtrl: NavController,
     private route: ActivatedRoute,
     private pesan: PesanSekarangService,
     private toast: ToastController,
@@ -85,7 +86,8 @@ export class PesanSekarangPage {
     .subscribe(async res => {
       console.log(res);
       pesan.dismiss();
-      
+
+      this.navCtrl.navigateForward(['/pesanan'], { replaceUrl: true })
 
       let toast = await this.toast.create({
         message: 'Berhasil Memproses Pemesanan.',

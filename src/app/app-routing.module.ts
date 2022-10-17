@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/shared/ubah-barber/ubah-barber.module').then( m => m.UbahBarberPageModule)
   },
   {
-    path: 'detail-pemesanan',
+    path: 'detail-pemesanan/:id',
     loadChildren: () => import('./pages/shared/detail-pemesanan/detail-pemesanan.module').then( m => m.DetailPemesananPageModule),
     canActivate: [AuthGuard]
   },

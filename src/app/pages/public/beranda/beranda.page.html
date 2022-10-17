@@ -44,7 +44,7 @@
               <div class="flex-1">
                 <div class="ion-text-capitalize"><b>{{ barber.name }}</b></div>
                 <div *ngIf="barber.barber?.workingHours[today] as wh;">
-                  <small *ngIf="!wh.close && wh.hourEnd > hourNow; else close">
+                  <small *ngIf="!wh.close && wh.hourStart < hourNow && wh.hourEnd > hourNow; else close">
                     {{wh.hourStart | date:'HH:mm'}} - {{wh.hourEnd | date:'HH:mm'}}
                   </small>
                   <ng-template #close>
@@ -67,7 +67,7 @@
                   <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
                 </div>
               </div>
-              <ion-button mode="ios" [disabled]="!barber.barber.price || barber.barber?.workingHours[5].close || barber.barber?.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
+              <ion-button *ngIf="barber.barber as b" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
                 [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
             </div>
           </div>

@@ -19,13 +19,15 @@ export class PesananPage {
     private toast: ToastController
   ) {
     this.orders$ = this.pesanan.orders$;
-
-    this.pesanan.getBarbers({ name: this.searchForm })
+  }
+  
+  ionViewDidEnter(){
+    this.pesanan.getOrders({})
     .subscribe(res => {
       console.log(res)
     }, (err: ErrorResponse) => {
       console.log(err)
-      // this.showToast(err.error.message)
+      this.showToast(err.error.message)
     })
   }
 

@@ -115,9 +115,12 @@
 </ion-content>
 
 <ion-footer *ngIf="!loadingDataBarber && barber.id">
-  <ion-toolbar>
+  <ion-toolbar *ngIf="barber.barber as b">
     <div class="ion-padding">
-      <ion-button mode="ios" [disabled]="barber.barber.workingHours[today].close || barber.barber.workingHours[today].hourEnd < hourNow" class="w-full" color="warning" [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
+      <ion-button mode="ios" *ngIf="b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow; else canOrder" disabled="true" class="w-full" color="medium">Barber Tutup</ion-button>
+      <ng-template #canOrder>
+        <ion-button mode="ios" class="w-full" color="warning" [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
+      </ng-template>
     </div>
   </ion-toolbar>
 </ion-footer>

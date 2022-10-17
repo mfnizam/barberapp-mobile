@@ -19,10 +19,10 @@ export class PesananService {
     return this.orders.asObservable()
   }
 
-  getBarbers({ name, sortBy = 'name', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
-    return this.http.get<GetOrdersResponse>(environment.serverUrl + '/barbers', {
+  getOrders({ sortBy = 'createdAt', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
+    return this.http.get<GetOrdersResponse>(environment.serverUrl + '/orders', {
       params: {
-        name: name ? JSON.stringify({ $regex: name, $options: 'i' }) : '',
+        status: JSON.stringify({ $lt: 2 }),
         sortBy,
         limit,
         page,

@@ -38,7 +38,9 @@
 
           <div style="padding: 10px 13px" (click)="kurangiJumlahPemesanan()">-</div>
           <div>
-            <ion-input [(ngModel)]="jumlahPemesanan" class="ion-no-padding input-jumlah text-center border-l border-r border-light-shade" style="width: 40px;"></ion-input>
+            <ion-input [(ngModel)]="jumlahPemesanan"
+              class="ion-no-padding input-jumlah text-center border-l border-r border-light-shade" style="width: 40px;">
+            </ion-input>
           </div>
           <div style="padding: 10px 13px" (click)="tambahJumlahPemesanan()">+</div>
         </div>
@@ -66,5 +68,13 @@
       </div>
     </ion-card-content>
   </ion-card>
-  <ion-button mode="ios" color="warning" class="w-full ion-no-margin ion-margin-top" (click)="pesanSekarang()">Pesan Sekarang</ion-button>
+  <div *ngIf="barber.barber as b">
+    <ion-button mode="ios"
+      *ngIf="b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow; else canOrder"
+      disabled="true" class="w-full ion-no-margin ion-margin-top" color="medium">Barber Tutup</ion-button>
+    <ng-template #canOrder>
+      <ion-button mode="ios" class="w-full ion-no-margin ion-margin-top" color="warning" (click)="pesanSekarang()">Pesan Sekarang</ion-button>
+    </ng-template>
+  </div>
+  <!-- <ion-button mode="ios" color="warning" class="w-full">Pesan Sekarang</ion-button> -->
 </ion-content>

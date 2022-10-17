@@ -70,15 +70,14 @@ export class UbahBarberPage {
     private ubah: UbahBarberService,
     private user: UserService,
     private toast: ToastController
-  ) {
-    this.getBarber();
-  }
+  ) {}
   
   ionViewDidEnter(){
     this.getBarber();
   }
 
   async getBarber(){
+    console.log('getbarber')
     let user = await this.user.getUser();
 
     this.barberForm.patchValue({userId: user.id, ...user.barber});
