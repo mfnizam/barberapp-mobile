@@ -1,82 +1,65 @@
-<ion-header [translucent]="true" class="ion-no-border">
- <ion-toolbar color="primary" class= "toolbar-title-default md in-toolbar hydrated">
-   <ion-title class="text-3xl pt-4">
-    Pemesanan
-  </ion-title>
-  <ion-buttons slot="end" class="relative">
-    <ion-button>
-      <ion-icon class=" text-3xl" name="print"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header class="ion-no-border drop-shadow-md">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" class="-mr-4">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-bold">Detail Pemesanan</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-
-
-  <div class="absolute -z-1 bg-primary w-full" style=" height: 40vh; bottom: 0px; left: 0px; border-radius: 30px 30px 0px 0px;">
-  </div>
-
-
-  <div class="absolute -z-1 bg-primary w-full" style=" height: 40vh; top: 0px; left: 0px; border-radius: 0px 0px 30px 30px;">
-  </div>
-
-  <div class="flex items-center flex-col" style="margin-bottom: 50px; margin-top: 20px;">
-    <div class="text-on-primary text-sm">Kode Pemesanan</div>
-    <div class="text-on-primary text-xl font-bold">EIJAS128736DSAD</div>
-  </div>
-
-  <div class="flex items-center flex-col">
-    <div class="mb-4 bg-background rounded-lg drop-shadow-lg ion-padding w-full-80">
-      <div class=" flex justify-between">
-      <div class="text-xl font-bold mb-1">Kota Malang</div>
-      <div class="text-sm text-medium "> 23 Januari 2022</div>
+  <div class="ion-padding bg-primary" style="min-height: 100%;">
+    <div *ngIf="order.barber && order.user" class="mb-4 bg-background rounded-lg drop-shadow-lg ion-padding ion-no-margin">
+      <div class="ion-margin-bottom ion-text-center">
+        <small class="text-sm">Kode Pemesanan</small>
+        <div class="font-bold ion-text-uppercase">{{order.id || '-'}}</div>
       </div>
-      <div class="text-medium text-sm">Penyedia Jasa</div>
-      <div class="text-xl font-bold">Fernanda Reza</div>
-      <div class="text-medium text-sm">Kota Malang Kec.Lowokwaru</div>
-      <div class="text-medium text-sm">0971287361213</div>
-
-      <hr class= "mt-4 mb-4" style="border-top:1px solid #999;">
-
+      <hr class="mt-4 bg-light">
+      <div class="flex items-center gap-3">
+        <div class="font-bold flex-1">Kota Malang</div>
+        <div class="text-medium">{{order.orderAt | date:'dd MMM YYYY'}}</div>
+      </div>
+      <hr class="mb-4 bg-light">
       <div>
-        <div class="text-medium text-sm">Pemesan</div>
-        <div class="text-xl font-bold">Anya Geraldine</div>
-        <div class="text-medium text-sm">Perum Permata Jingga</div>
-        <div class="text-medium text-sm">0897382473024</div>
+        <small class="text-medium">Nama Barber</small>
+        <div class="text-xl font-bold ion-text-capitalize">{{order.barber.name || '-'}}</div>
+        <div class="text-medium">{{order.barber.address || '-'}}</div>
+        <div class="text-medium">{{order.barber.phoneNumber || '-'}}</div>
       </div>
-
-    </div>
-    
   
-    <div class="bg-background rounded-lg drop-shadow-lg ion-padding w-full-80 mb-4">
-      <div class="font-bold mb-1 text-xl">Detail Harga</div>
-      <div class="text-medium text-sm flex justify-between">
-        <div>Jasa Cukur Rambut</div>
-        <div>Rp. 50.000,-</div>
+      <hr class="mt-4 mb-4 bg-light">
+  
+      <div>
+        <small class="text-medium">Pemesan</small>
+        <div class="text-xl font-bold">{{order.user.name || '-'}}</div>
+        <div class="text-medium">{{order.user.address || '-'}}</div>
+        <div class="text-medium">{{order.user.phoneNumber || '-'}}</div>
       </div>
-      <div class="text-medium text-sm flex justify-between">
-        <div>Transport</div>
-        <div> Rp. 10.000,-</div>
-      </div>
-      <div class="text-medium text-sm flex justify-between">
-        <div>Jumlah Pemesanan</div>
-        <div>2x</div>
-      </div>
-      <hr class= "mt-4 mb-4" style="border-top:1px solid #999;">
-      <div class="font-bold flex justify-between">
-        <div>Total Harga</div>
-        <div class="text-sm">Rp. 100.000,-</div>
+  
+      <hr class="mt-4 mb-4 bg-light">
+      <div>
+        <div class="font-bold mb-1">Detail Harga</div>
+        <div class="text-medium text-sm flex justify-between">
+          <div>Jasa Cukur Rambut</div>
+          <div>Rp. {{order.price | number:'2.0'}},-</div>
+        </div>
+        <div class="text-medium text-sm flex justify-between">
+          <div>Transport</div>
+          <div> Rp. 5.000,-</div>
+        </div>
+        <div class="text-medium text-sm flex justify-between">
+          <div>Jumlah Pemesanan</div>
+          <div>{{order.amount || 1}}x</div>
+        </div>
+        <hr class="mt-4 mb-4 bg-light">
+        <div class="font-bold flex justify-between">
+          <div>Total Harga</div>
+          <div><b>Rp. {{(order.price * order.amount) + 5000 | number:'2.0'}},-</b></div>
+        </div>
       </div>
     </div>
-
-    <ion-button color="primary">Chat Tukang Cukur</ion-button>
-
-    <ion-button routerLink="/" class="flex justify-center" color="warning">Tutup</ion-button>
-
-  
+    <ion-button mode="ios" color="warning" class="ion-no-margin w-full ion-margin-top"><b>Export Detail Pemesanan</b></ion-button>
+    <!-- <ion-button color="primary">Chat Tukang Cukur</ion-button> -->
+    <!-- <ion-button routerLink="/" class="flex justify-center" color="warning">Tutup</ion-button> -->
   </div>
-
-
 </ion-content>

@@ -1,15 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Order } from '../../public/pesanan/pesanan.interface';
+import { DetailPemesananService } from './detail-pemesanan.service';
 
 @Component({
   selector: 'app-detail-pemesanan',
-  templateUrl: './detail-pemesanan.page.html',
-  styleUrls: ['./detail-pemesanan.page.scss'],
+  templateUrl: './detail-pemesanan.page.html'
 })
-export class DetailPemesananPage implements OnInit {
+export class DetailPemesananPage {
 
-  constructor() { }
+  orderId: string = '';
+  order: Order = {} as Order;
 
-  ngOnInit() {
+  constructor(
+    private route: ActivatedRoute,
+    private detail: DetailPemesananService
+  ) {
+    this.orderId = this.route.snapshot.params.id;
   }
 
+  ionViewDidEnter(){
+    this.detail.getOrder(this.orderId)
+    .subscribe(order => {
+      console.log(order)
+      this.order = order
+    }, err => {
+      console.log(err)
+    })
+  }
 }

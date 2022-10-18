@@ -14,7 +14,7 @@ export interface Barber {
   active        ?: boolean;
   price         : number;
   detail        : string;
-  workingHours  : any;
+  workingHours  : WorkingHours[];
 }
 
 export interface WorkingHours { 

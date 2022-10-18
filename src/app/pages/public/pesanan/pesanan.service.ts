@@ -31,4 +31,8 @@ export class PesananService {
       this.orders.next(response.results)
     }))
   }
+
+  orderDone(orderId: string): Observable<Order>{
+    return this.http.patch<Order>(environment.serverUrl + '/orders/' + orderId, { status: 2 })
+  }
 }

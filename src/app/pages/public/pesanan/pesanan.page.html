@@ -13,41 +13,49 @@
 <ion-content class="ion-padding">
   <div *ngIf="(orders$ | async) as orders">
     <ng-container *ngIf="orders.length > 0; else noOrders">
-      <ion-card mode="ios" *ngFor="let order of orders; trackBy: trackByFn" class="rounded-xl ion-no-margin ion-margin-bottom ion-padding" [routerLink]="'/detail-pemesanan/' + order.id">
-        <div class="flex justify-between">
-          <div class="flex-1">
-            <div class="font-bold text-2xl ion-text-capitalize -mt-1">{{order.barber?.name || '-'}}</div>
-            <div>{{order.barber?.address || '-'}}</div>
-          </div>
-          <!-- <div class="text-right">
-            <div [ngClass]="!order.status? 'bg-medium text-on-medium' : 'bg-primary text-on-primary'" class="pt-2 pb-2 pl-3 pr-3 text-center rounded-full">
-              {{!order.status? 'Menunggu' : 'Aktif'}}
+      <div mode="ios" *ngFor="let order of orders; trackBy: trackByFn"
+        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl">
+        <div [routerLink]="'/detail-pemesanan/' + order.id">
+          <div class="flex justify-between">
+            <div class="flex-1">
+              <small class="text-medium">Nama {{userData.role == 'user'? 'Barber' : 'Pelanggan'}}</small>
+              <h5 class="ion-no-margin mb-2 font-bold ion-text-capitalize">
+                {{(userData.role == 'user'? order.barber?.name : order.user?.name) || '-'}}
+              </h5>
+              <div *ngIf="userData.role == 'user'">{{order.barber?.address || '-'}}</div>
             </div>
-          </div> -->
+            <!-- <div class="text-right">
+              <div [ngClass]="!order.status? 'bg-medium text-on-medium' : 'bg-primary text-on-primary'" class="pt-2 pb-2 pl-3 pr-3 text-center rounded-full">
+                {{!order.status? 'Menunggu' : 'Aktif'}}
+              </div>
+            </div> -->
+          </div>
+          <hr class="bg-light">
+          <div class="flex">
+            <div class="flex-1">
+              <small class="text-medium">Alamat {{userData.role == 'user'? 'Anda' : 'Pelanggan'}}</small>
+              <div class="truncate-1">{{order.user.address}}</div>
+            </div>
+            <div class="ion-text-right">
+              <small class="text-medium">Jumlah</small>
+              <div>{{order.amount}}x Orang</div>
+            </div>
+          </div>
+          <hr class="bg-light">
+          <div class="flex gap-3">
+            <div class="flex-1">
+              <small class="text-medium">Total Harga</small>
+              <div class="truncate-1 text-primary"><b>Rp {{order.price | number:'2.0'}},-</b></div>
+            </div>
+            <div class="ion-text-right">
+              <small class="text-medium">Status</small>
+              <div [ngClass]="!order.status? 'text-medium' : 'text-success'"><b>{{!order.status? 'Menunggu' :
+                  'Aktif'}}</b></div>
+            </div>
+          </div>
         </div>
-        <hr class="bg-light">
-        <div class="flex">
-          <div class="flex-1">
-            <small class="text-medium">Alamat Anda</small>
-            <div class="truncate-1">{{order.user.address}}</div>
-          </div>
-          <div class="ion-text-right">
-            <small class="text-medium">Jumlah</small>
-            <div>{{order.amount}}x Orang</div>
-          </div>
-        </div>
-        <hr class="bg-light">
-        <div class="flex">
-          <div class="flex-1">
-            <small class="text-medium">Total Harga</small>
-            <div class="truncate-1 text-primary"><b>Rp {{order.price | number:'2.0'}},-</b></div>
-          </div>
-          <div class="ion-text-right">
-            <small class="text-medium">Status</small>
-            <div [ngClass]="!order.status? 'text-medium' : 'text-success'"><b>{{!order.status? 'Menunggu' : 'Aktif'}}</b></div>
-          </div>
-        </div>
-      </ion-card>
+        <ion-button *ngIf="userData.role == 'barber'" class="ion-no-margin w-full ion-margin-top" (click)="orderDone(order.id)">Pesanan Selesai</ion-button>
+      </div>
     </ng-container>
     <ng-template #noOrders>
       <div class="ion-text-center text-medium">Tidak ada pesanan aktif</div>

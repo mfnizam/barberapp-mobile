@@ -79,70 +79,89 @@
       </div>
     </div>
     <div *ngSwitchCase="'barber'" class="h-full flex flex-col gap-3">
-      <div [ngClass]="userData.barber?.active?  'bg-primary' : 'bg-medium'"
-        class="flex items-center ion-padding text-on-primary rounded-xl">
+      <div class="flex items-center ion-padding bg-primary text-on-primary rounded-xl">
         <div class="flex-1">
           <small>Selamat Datang</small>
-          <h4 class="ion-no-margin">Tember Lamberta</h4>
+          <h4 class="ion-no-margin ion-text-capitalize">{{ userData.name || '-' }}</h4>
           <div class="flex items-center gap-2 mt-1">
-            <div [ngClass]="userData.barber?.active? 'bg-success' : 'bg-light'" class="rounded-full"
-              style="height: 10px; width: 10px;"></div>
-            <small>Sedang {{userData.barber?.active? '' : 'Tidak'}} Aktif</small>
+            <!-- <div class="rounded-full" style="height: 10px; width: 10px;"></div> -->
+            <ng-container *ngIf="userData.barber?.workingHours[today] as wh">
+              <div *ngIf="wh.hourStart < hourNow && wh.hourEnd > hourNow && !wh.close; else close" class="bg-success text-on-success pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
+                <small>Barber Buka</small>
+              </div>
+
+              <ng-template #close>
+                <div class="bg-danger text-on-danger pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
+                  <small>Barber Tutup</small>
+                </div>
+              </ng-template>
+            </ng-container>
+            <!-- <small>Sedang {{userData.barber?.active? '' : 'Tidak'}} Aktif</small> -->
           </div>
         </div>
-        <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'"
+        <div class="bg-background rounded-full" style="height: 66px; width: 66px;">
+          <img class="rounded-full" src="assets/images/test.webp">
+        </div>
+        <!-- <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'"
           class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
           <ion-icon slot="icon-only" [color]="userData.barber?.active? 'primary' : 'medium'" name="power"
             style="font-size: 30pt; margin: 10px;"></ion-icon>
-        </ion-button>
+        </ion-button> -->
       </div>
-      <div class="ion-text-center ion-padding border border-light rounded-xl">
-        <div class="ion-text-capitalize mb-2">
-          kec. lowokwaru, kota malang
+      <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
+        <div class="flex-1">
+          <small class="mb-2 text-medium">Alamat Barber</small>
+          <div class="ion-text-capitalize"><b>{{userData.address || '-' }}</b> </div>
         </div>
-        <div class="text-medium">Ubah Alamat</div>
+        <div class="text-sm flex items-center">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
       </div>
-      <div class="ion-text-center ion-padding border border-light rounded-xl">
-        <div class="mb-2">Harga Potong Rambut per Orang</div>
-        <h2 class="ion-no-margin text-primary"><b>Rp. 15.000,-</b></h2>
-        <div class="text-medium mt-2">Ubah Harga</div>
+      <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
+        <div class="flex-1">
+          <small class="mb-2 text-medium">Harga per Orang</small>
+          <div class="ion-no-margin"><b>Rp. {{ userData.barber.price | number:'2.0' }},-</b></div>
+        </div>
+        <div class="text-sm flex items-center">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
       </div>
       <div>
         <h4><b>Permintaan Pemesanan</b></h4>
         <div>
-          <div *ngFor="let p of [1]" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
-            <div class="flex items-center gap-2 ion-margin-bottom">
-              <div class="bg-primary rounded-full" style="height: 50px; width: 50px;">
-                <img class="rounded-full" src="assets/images/test.webp">
-              </div>
-              <div class="flex-1">
-                <div><b>Singgih Jarjid</b></div>
-                <!-- <div class="text-medium"><small>082445887849</small></div> -->
-                <div class="truncate-2">
-                  <small>Rumah singgih arek sambigede nasional</small>
+          <div *ngIf="(orders$ | async) as orders">
+            <ng-container *ngIf="orders.length > 0; else noOrder">
+              <div *ngFor="let order of orders" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
+                <div class="flex items-center gap-3 ion-margin-bottom">
+                  <div class="bg-primary rounded-full" style="height: 40px; width: 40px;">
+                    <img class="rounded-full" src="assets/images/test.webp">
+                  </div>
+                  <div class="flex-1">
+                    <div class="ion-text-capitalize"><b>{{order.user?.name || '-'}}</b></div>
+                    <!-- <div class="text-medium"><small>082445887849</small></div> -->
+                    <div class="truncate-2">
+                      <small>{{order.user?.address || '-'}}</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="ion-margin-bottom flex items-center gap-3">
+                  <div class="flex-1">
+                    <small class="text-medium">Harga</small>
+                    <div class="text-primary"><b>Rp. {{order.price | number:'2.0'}},-</b></div>
+                  </div>
+                  <div class="ion-text-right">
+                    <small class="text-medium">Jumlah</small>
+                    <div><b>{{order.amount || 1}} Orang</b></div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <ion-button mode="ios" fill="outline" color="danger" class="ion-no-margin" (click)="rejectOrder(order.id)">
+                    <ion-icon name="close"></ion-icon>
+                  </ion-button>
+                  <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full"
+                    (click)="acceptOrder(order.id)">Terima</ion-button>
                 </div>
               </div>
-            </div>
-            <div class="ion-margin-bottom flex items-center gap-3">
-              <div class="flex-1">
-                <small class="text-medium">Harga</small>
-                <div class="text-primary"><b>Rp. 15.000,-</b></div>
-              </div>
-              <div class="ion-text-right">
-                <small class="text-medium">Jam Janji Temu</small>
-                <div><b>Hari ini, 10:00 AM</b></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <ion-button mode="ios" fill="outline" color="danger" class="ion-no-margin" (click)="rejectOrder(p)">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-              <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full"
-                (click)="acceptOrder(p)">Terima</ion-button>
-            </div>
+            </ng-container>
           </div>
         </div>
-        <ng-template #noPermintaan>
+        <ng-template #noOrder>
           <div class="text-medium ion-text-center ion-padding border border-light rounded-xl">
             Tidak ada permintaan pemesanan terbaru
           </div>
