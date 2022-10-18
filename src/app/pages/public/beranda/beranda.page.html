@@ -58,7 +58,7 @@
             <hr class="bg-light mt-3 mb-3">
             <div class="flex gap-3 items-center -mb-1">
               <div class="flex-1" [routerLink]="'/detail-barber/' + barber.id">
-                <div *ngIf="barber.barber.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
+                <div *ngIf="barber.barber?.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
                     {{price | number:'2.0'}},-</b></div>
                 <ng-template #noPrice>
                   <div class="text-medium">Belum Tersedia</div>
@@ -67,7 +67,7 @@
                   <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
                 </div>
               </div>
-              <ion-button *ngIf="barber.barber as b" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
+              <ion-button *ngIf="barber.barber as b;" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
                 [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
             </div>
           </div>

@@ -9,7 +9,8 @@
 
 <ion-content>
   <div class="ion-padding bg-primary" style="min-height: 100%;">
-    <div *ngIf="order.barber && order.user" class="mb-4 bg-background rounded-lg drop-shadow-lg ion-padding ion-no-margin">
+    <div #screen id="order" *ngIf="order.barber && order.user"
+      class="mb-4 bg-background rounded-lg drop-shadow-lg ion-padding ion-no-margin">
       <div class="ion-margin-bottom ion-text-center">
         <small class="text-sm">Kode Pemesanan</small>
         <div class="font-bold ion-text-uppercase">{{order.id || '-'}}</div>
@@ -26,16 +27,16 @@
         <div class="text-medium">{{order.barber.address || '-'}}</div>
         <div class="text-medium">{{order.barber.phoneNumber || '-'}}</div>
       </div>
-  
+
       <hr class="mt-4 mb-4 bg-light">
-  
+
       <div>
         <small class="text-medium">Pemesan</small>
         <div class="text-xl font-bold">{{order.user.name || '-'}}</div>
         <div class="text-medium">{{order.user.address || '-'}}</div>
         <div class="text-medium">{{order.user.phoneNumber || '-'}}</div>
       </div>
-  
+
       <hr class="mt-4 mb-4 bg-light">
       <div>
         <div class="font-bold mb-1">Detail Harga</div>
@@ -58,8 +59,15 @@
         </div>
       </div>
     </div>
-    <ion-button mode="ios" color="warning" class="ion-no-margin w-full ion-margin-top"><b>Export Detail Pemesanan</b></ion-button>
+    <ion-button *ngIf="order.barber && order.user" mode="ios" color="warning"
+      class="ion-no-margin w-full ion-margin-top" (click)="exportOrder()"><b>Export Detail Pemesanan</b></ion-button>
     <!-- <ion-button color="primary">Chat Tukang Cukur</ion-button> -->
     <!-- <ion-button routerLink="/" class="flex justify-center" color="warning">Tutup</ion-button> -->
+  </div>
+
+
+  <div id="download">
+    <img #canvas>
+    <a #downloadLink></a>
   </div>
 </ion-content>

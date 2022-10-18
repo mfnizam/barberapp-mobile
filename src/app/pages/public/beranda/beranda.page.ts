@@ -15,12 +15,12 @@ export class BerandaPage {
   today = new Date().getDay();
   hourNow = new Date(0).setHours(new Date().getHours(), new Date().getMinutes());
   userData: User = this.user.user;
-
+  
   searchForm = "";
   barbers$: Observable<User[]> = new BehaviorSubject<User[]>([] as User[]);
 
   orders$: Observable<Order[]> = new BehaviorSubject<Order[]>([] as Order[]);
-
+  
   constructor(
     private navCtrl: NavController,
     private beranda: BerandaService,
@@ -30,6 +30,7 @@ export class BerandaPage {
   }
 
   ionViewDidEnter() {
+    this.userData = this.user.user;
     if (this.userData.role === 'user') {
       this.barbers$ = this.beranda.barbers$;
       this.beranda.getBarbers({ name: this.searchForm })
