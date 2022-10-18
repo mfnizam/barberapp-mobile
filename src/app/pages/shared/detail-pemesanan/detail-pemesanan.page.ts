@@ -39,7 +39,7 @@ export class DetailPemesananPage {
     html2canvas(this.screen.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
       this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
-      this.downloadLink.nativeElement.download = 'marble-diagram.png';
+      this.downloadLink.nativeElement.download = 'order-' + this.orderId + '.png';
       this.downloadLink.nativeElement.click();
     });
   }
