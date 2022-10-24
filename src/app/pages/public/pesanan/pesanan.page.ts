@@ -27,6 +27,10 @@ export class PesananPage {
 
   ionViewDidEnter() {
     this.userData = this.user.user;
+    this.getOrder();
+  }
+  
+  getOrder(){
     this.pesanan.getOrders({})
       .subscribe(res => {
         console.log(res)
@@ -40,7 +44,8 @@ export class PesananPage {
     this.pesanan.orderDone(orderId)
       .subscribe(res => {
         console.log(res);
-        this.showToast('Berhasil menyelesaikan pemesanan', 'medium')
+        this.showToast('Berhasil menyelesaikan pemesanan', 'medium');
+        this.getOrder();
       }, err => {
         console.log(err)
         this.showToast(err.error.message)

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@core/interfaces/user.interface';
 import { ToastController } from '@ionic/angular';
+import { Review } from '../../public/pesanan/pesanan.interface';
 import { DetailBarberService } from './detail-barber.service';
 
 @Component({
@@ -14,6 +15,9 @@ export class DetailBarberPage {
   barber: User = {} as User;
   loadingDataBarber = true;
 
+  review: Review[] = [];
+  loadingDataReview = false;
+
   today = new Date().getDay();
   hourNow = new Date(0).setHours(new Date().getHours(), new Date().getMinutes());
 
@@ -25,7 +29,8 @@ export class DetailBarberPage {
     private toast: ToastController
   ) {
     this.barberId = this.route.snapshot.params.id;
-    this.getBarber(this.barberId)
+    this.getBarber(this.barberId);
+    this.getReviewBarber(this.barberId)
   }
 
   ionViewDidEnter(){
@@ -50,6 +55,16 @@ export class DetailBarberPage {
       })
 
       toast.present()
+    })
+  }
+
+  getReviewBarber(id: string){
+    this.loadingDataReview = true;
+    this.detail.getReview(id)
+    .subscribe(res => {
+      console.log(res)
+    }, err => {
+      console.log(err)
     })
   }
 

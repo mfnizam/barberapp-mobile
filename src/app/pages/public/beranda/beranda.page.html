@@ -36,7 +36,7 @@
       <div *ngIf="(barbers$ | async) as barbers">
         <ng-container *ngIf="barbers.length > 0; else noBarbers">
           <div *ngFor="let barber of barbers; trackBy: trackByFn"
-            class="ion-padding bg-background drop-shadow-lg items-center rounded-xl">
+            class="ion-padding bg-background drop-shadow-lg items-center rounded-xl ion-margin-bottom">
             <div class="flex items-center gap-3" [routerLink]="'/detail-barber/' + barber.id">
               <div class="bg-primary rounded-full" style="width: 60px; height: 60px; overflow: hidden;">
                 <img src="assets/images/test.webp" alt="">

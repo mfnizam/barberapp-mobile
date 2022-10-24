@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // serverUrl: 'http://localhost:3000/v1',
-  serverUrl: "https://projectkabeh.herokuapp.com/v1"
+  serverUrl: 'http://localhost:3000/v1',
+  // serverUrl: "https://projectkabeh.herokuapp.com/v1"
 };
 
 /*

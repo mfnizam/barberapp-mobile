@@ -7,6 +7,7 @@ export interface Order {
   user: User;
   amount: number;
   price: number;
+  review: Review;
 }
 
 export interface CreateOrderParameter {
@@ -28,5 +29,19 @@ export interface GetOrdersParameter {
   sortBy?: string;
   limit?: number;
   page?: number;
+}
+
+export interface CreateReviewParameter{
+  order: string;
+  star: number;
+  content: string; 
+}
+
+export interface Review{
+  id: string;
+  idOrder?: string,
+  user: User,
+  star: number,
+  content: string
 }
 

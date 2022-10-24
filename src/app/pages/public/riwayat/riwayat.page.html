@@ -16,47 +16,73 @@
   <div *ngIf="(orders$ | async) as orders">
     <ng-container *ngIf="orders.length > 0; else noOrders">
       <div mode="ios" *ngFor="let order of orders; trackBy: trackByFn"
-        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl" [routerLink]="'/detail-pemesanan/' + order.id">
-        <div class="flex justify-between">
-          <div class="flex-1">
-            <small class="text-medium">Nama Barber</small>
-            <h5 class="ion-no-margin mb-2 font-bold ion-text-capitalize">{{order.barber?.name || '-'}}</h5>
-            <div>{{order.barber?.address || '-'}}</div>
-          </div>
-          <!-- <div class="text-right">
-            <div [ngClass]="!order.status? 'bg-medium text-on-medium' : 'bg-primary text-on-primary'" class="pt-2 pb-2 pl-3 pr-3 text-center rounded-full">
-              {{!order.status? 'Menunggu' : 'Aktif'}}
+        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl">
+        <div [routerLink]="'/detail-pemesanan/' + order.id">
+          <div class="flex justify-between">
+            <div class="flex-1">
+              <small class="text-medium">Nama Barber</small>
+              <h5 class="ion-no-margin mb-2 font-bold ion-text-capitalize">{{order.barber?.name || '-'}}</h5>
+              <div>{{order.barber?.address || '-'}}</div>
             </div>
-          </div> -->
-        </div>
-        <hr class="bg-light">
-        <div class="flex gap-3">
-          <div class="flex-1">
-            <small class="text-medium">Alamat Anda</small>
-            <div class="truncate-1">{{order.user.address}}</div>
+            <!-- <div class="text-right">
+              <div [ngClass]="!order.status? 'bg-medium text-on-medium' : 'bg-primary text-on-primary'" class="pt-2 pb-2 pl-3 pr-3 text-center rounded-full">
+                {{!order.status? 'Menunggu' : 'Aktif'}}
+              </div>
+            </div> -->
           </div>
-          <div class="ion-text-right">
-            <small class="text-medium">Jumlah</small>
-            <div>{{order.amount}}x Orang</div>
-          </div>
-        </div>
-        <hr class="bg-light">
-        <div class="flex">
-          <div class="flex-1">
-            <small class="text-medium">Total Harga</small>
-            <div class="truncate-1 text-primary"><b>Rp {{order.price | number:'2.0'}},-</b></div>
-          </div>
-          <div class="ion-text-right">
-            <small class="text-medium">Status</small>
-            <div [ngClass]="order.status == 2? 'text-success' : 'text-danger'">
-              <b>{{order.status == 2? 'Selesai' : 'Batal'}}</b>
+          <hr class="bg-light">
+          <div class="flex gap-3">
+            <div class="flex-1">
+              <small class="text-medium">Alamat Anda</small>
+              <div class="truncate-1">{{order.user.address}}</div>
+            </div>
+            <div class="ion-text-right">
+              <small class="text-medium">Jumlah</small>
+              <div>{{order.amount}}x Orang</div>
             </div>
           </div>
+          <hr class="bg-light">
+          <div class="flex">
+            <div class="flex-1">
+              <small class="text-medium">Total Harga</small>
+              <div class="truncate-1 text-primary"><b>Rp {{order.price | number:'2.0'}},-</b></div>
+            </div>
+            <div class="ion-text-right">
+              <small class="text-medium">Status</small>
+              <div [ngClass]="order.status == 2? 'text-success' : 'text-danger'">
+                <b>{{order.status == 2? 'Selesai' : 'Batal'}}</b>
+              </div>
+            </div>
+          </div>
         </div>
+        <ion-button *ngIf="userData.role == 'user'" fill="outline" color="warning" class="ion-no-margin w-full ion-margin-top"
+          (click)="openReview(modalReview, order.id)">Beri Ulasan Pesanan</ion-button>
       </div>
     </ng-container>
     <ng-template #noOrders>
       <div class="ion-text-center text-medium">Tidak ada riwayat pemesanan</div>
     </ng-template>
   </div>
+
+  <ion-modal #modalReview mode="md" class="no-handle modal-bottom-custom" style="--max-height: 340px;" (didDismiss)="modalReviewDismiss()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title><b>Ulasan Pesanan</b></ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="formReview" (submit)="sendReview(modalReview)">
+          <div class="ion-margin-bottom flex items-center justify-center gap-1">
+            <ion-icon *ngFor="let s of [1,2,3,4,5]" color="warning" [name]="formReview.get('star').value > (s - 1)? 'star' : 'star-outline'" style="font-size: 28pt;" (click)="formReview.get('star').setValue(s)"></ion-icon>
+          </div>
+          <ion-item class="border rounded-xl ion-margin-bottom">
+            <ion-label position="stacked">Review</ion-label>
+            <ion-textarea formControlName="content" rows="5" type="text" placeholder="Tuliskan review anda"></ion-textarea>
+          </ion-item>
+          <ion-button type="submit" mode="ios" color="primary" class="ion-no-margin w-full">Kirim</ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

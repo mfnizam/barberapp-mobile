@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environment/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { GetOrdersParameter, GetOrdersResponse, Order } from '../pesanan/pesanan.interface';
+import { CreateReviewParameter, GetOrdersParameter, GetOrdersResponse, Order, Review } from '../pesanan/pesanan.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,9 @@ export class RiwayatService {
     }).pipe(tap(response => {
       this.orders.next(response.results)
     }))
+  }
+
+  createReview(review: CreateReviewParameter): Observable<Review> {
+    return this.http.post<Review>(environment.serverUrl + '/reviews', review)
   }
 }
