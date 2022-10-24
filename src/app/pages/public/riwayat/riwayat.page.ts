@@ -21,7 +21,7 @@ export class RiwayatPage {
 
   formReview: FormGroup = this.formBuilder.group({
     order: [null, Validators.required],
-    star: [0, Validators.required],
+    star: [1, Validators.required],
     content: [null],
   })
   reviewStar: number = 0;
@@ -57,6 +57,8 @@ export class RiwayatPage {
     .subscribe(res => {
       console.log(res);
       modal.dismiss();
+      this.riwayat.getOrders({})
+      .subscribe(res => {}, err => { console.log(err) })
     }, err => {
       console.log(err);
       this.showToast(err.error.message)

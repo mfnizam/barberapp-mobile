@@ -1,5 +1,5 @@
 // move this file to shared interface folder (create shared interface or just use core interfaces)
-import { User } from "@core/interfaces/user.interface";
+import { Barber, User } from "@core/interfaces/user.interface";
 
 export interface Order {
   id: string;
@@ -31,17 +31,26 @@ export interface GetOrdersParameter {
   page?: number;
 }
 
+export interface Review{
+  id: string;
+  order: string,
+  barber: Barber,
+  user: User,
+  star: number,
+  content: string
+}
+
 export interface CreateReviewParameter{
   order: string;
   star: number;
   content: string; 
 }
 
-export interface Review{
-  id: string;
-  idOrder?: string,
-  user: User,
-  star: number,
-  content: string
+export interface GetReviewsResponse {
+  results: Review[],
+  page: number,
+  limit: number,
+  totalPages: number,
+  totalResults: number
 }
 

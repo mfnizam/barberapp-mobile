@@ -66,30 +66,35 @@
               <!-- <hr class="bg-light"> -->
               <div class="flex items-center justify-between ion-margin-bottom">
                 <div class="flex items-center gap-1">
-                  <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
-                  <div><small>(0)</small></div>
+                  <ion-icon *ngFor="let s of [1,2,3,4,5]" [color]="s <= star? 'warning' : 'medium'" name="star"></ion-icon>
+                  <div><small>({{star}})</small></div>
                 </div>
-                <small>23 Komentar</small>
+                <small>{{reviews.length || 0}} Review</small>
               </div>
               <div class="mb-2">
               </div>
-              <div>
-                <div class="border border-light-shade rounded-xl ion-padding">
-                  <div class="flex items-center gap-3">
+              <div *ngIf="reviews.length > 0; else noReview">
+                <div *ngFor="let review of reviews" class="border border-light-shade rounded-xl ion-padding">
+                  <div class="flex gap-3">
                     <img class="rounded-full" style="width: 50px; height: 50px;" src="assets/images/test.webp">
-                    <div class="flex-1">
-                      <div><b>Budhe</b></div>
-                      <div>
-                        <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star">
+                    <div class="flex-1" style="align-self: center;">
+                      <div class="ion-text-capitalize"><b>{{review.user?.name || '-'}}</b></div>
+                      <div class="mt-1">
+                        <ion-icon *ngFor="let s of [1,2,3,4,5]" [color]="s > review.star? 'medium' : 'warning'" name="star">
                         </ion-icon>
                       </div>
-                      <div class="text-medium"><small>23 Agu 2022</small></div>
                     </div>
+                    <div class="text-medium"><small>{{review.reviewAt | date:'dd-MM-YYYY'}}</small></div>
                   </div>
                   <hr>
-                  <div>Pelayanannya sangat ramah, harga terjangkau</div>
+                  <div>{{review.content || '-'}}</div>
                 </div>
               </div>
+              <ng-template #noReview>
+                <div class="ion-padding text-medium ion-text-center border rounded-xl">
+                  Belum ada review
+                </div>
+              </ng-template>
             </ion-list>
           </ion-accordion>
 

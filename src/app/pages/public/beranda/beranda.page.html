@@ -118,7 +118,7 @@
       <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
         <div class="flex-1">
           <small class="mb-2 text-medium">Harga per Orang</small>
-          <div class="ion-no-margin"><b>Rp. {{ userData.barber?.price | number:'2.0' }},-</b></div>
+          <div class="ion-no-margin"><b>Rp. {{ (userData.barber?.price | number:'2.0') || 0 }},-</b></div>
         </div>
         <div class="text-sm flex items-center">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
       </div>

@@ -30,7 +30,7 @@
               </div>
             </div> -->
           </div>
-          <hr class="bg-light">
+          <hr class="">
           <div class="flex gap-3">
             <div class="flex-1">
               <small class="text-medium">Alamat Anda</small>
@@ -41,7 +41,7 @@
               <div>{{order.amount}}x Orang</div>
             </div>
           </div>
-          <hr class="bg-light">
+          <hr class="">
           <div class="flex">
             <div class="flex-1">
               <small class="text-medium">Total Harga</small>
@@ -55,8 +55,27 @@
             </div>
           </div>
         </div>
-        <ion-button *ngIf="userData.role == 'user'" fill="outline" color="warning" class="ion-no-margin w-full ion-margin-top"
-          (click)="openReview(modalReview, order.id)">Beri Ulasan Pesanan</ion-button>
+        <ion-button *ngIf="(!order.review || !order.review.id) && userData.role == 'user'; else review" fill="outline" color="warning" class="ion-no-margin w-full ion-margin-top"
+        (click)="openReview(modalReview, order.id)">Beri Ulasan Pesanan</ion-button>
+        <ng-template #review>
+          <hr class="bg-light">
+          <div *ngIf="order.review as review; else noReview" class="flex gap-3">
+            <div class="flex-1">
+              <small class="text-medium">Review</small>
+              <div class="truncate-1">{{review.content}}</div>
+            </div>
+            <div class="ion-text-right">
+              <small class="text-medium">Rating</small>
+              <div class="">
+                <ion-icon *ngFor="let s of [1,2,3,4,5]" [color]="review.star >= s? 'warning' : 'medium'" name="star"></ion-icon>
+              </div>
+            </div>
+          </div>
+
+        <ng-template #noReview>
+          <div class="text-center text-medium pt-1">Belum di review</div>
+        </ng-template>
+        </ng-template>
       </div>
     </ng-container>
     <ng-template #noOrders>
