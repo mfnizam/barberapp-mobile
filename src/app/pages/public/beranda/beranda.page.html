@@ -1,10 +1,10 @@
-<ion-header *ngIf="userData.role == 'user'" class="ion-no-border">
+<ion-header *ngIf="userData?.role == 'user'" class="ion-no-border">
   <ion-toolbar>
     <ion-title class="text-3xl ion-padding">
       Beranda
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-searchbar mode="ios" color="light" class="ion-padding" clearIcon="close-sharp" debounce="100">
     </ion-searchbar>
     <div class="flex gap-3 ion-padding-start ion-padding-end ion-padding-bottom">
@@ -27,161 +27,166 @@
         </div>
       </div>
     </div>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container [ngSwitch]="userData?.role">
-    <div *ngSwitchCase="'user'">
-      <div *ngIf="(barbers$ | async) as barbers">
-        <ng-container *ngIf="barbers.length > 0; else noBarbers">
-          <div *ngFor="let barber of barbers; trackBy: trackByFn"
-            class="ion-padding bg-background drop-shadow-lg items-center rounded-xl ion-margin-bottom">
-            <div class="flex items-center gap-3" [routerLink]="'/detail-barber/' + barber.id">
-              <div class="bg-primary rounded-full" style="width: 60px; height: 60px; overflow: hidden;">
-                <img src="assets/images/test.webp" alt="">
-              </div>
-              <div class="flex-1">
-                <div class="ion-text-capitalize"><b>{{ barber.name }}</b></div>
-                <div *ngIf="barber.barber?.workingHours[today] as wh;">
-                  <small *ngIf="!wh.close && wh.hourStart < hourNow && wh.hourEnd > hourNow; else close">
-                    {{wh.hourStart | date:'HH:mm'}} - {{wh.hourEnd | date:'HH:mm'}}
-                  </small>
-                  <ng-template #close>
-                    <span class="text-danger">(Tutup)</span>
-                  </ng-template>
+  <ng-container *ngIf="userData; else logout">
+    <ng-container [ngSwitch]="userData.role">
+      <div *ngSwitchCase="'user'">
+        <div *ngIf="(barbers$ | async) as barbers">
+          <ng-container *ngIf="barbers.length > 0; else noBarbers">
+            <div *ngFor="let barber of barbers; trackBy: trackByFn"
+              class="ion-padding bg-background drop-shadow-lg items-center rounded-xl ion-margin-bottom">
+              <div class="flex items-center gap-3" [routerLink]="'/detail-barber/' + barber.id">
+                <div class="bg-primary rounded-full" style="width: 60px; height: 60px; overflow: hidden;">
+                  <img src="assets/images/test.webp" alt="">
                 </div>
-                <div class="text-medium"><small>{{ barber.address }}</small></div>
-              </div>
-              <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
-            </div>
-            <hr class="bg-light mt-3 mb-3">
-            <div class="flex gap-3 items-center -mb-1">
-              <div class="flex-1" [routerLink]="'/detail-barber/' + barber.id">
-                <div *ngIf="barber.barber?.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
-                    {{price | number:'2.0'}},-</b></div>
-                <ng-template #noPrice>
-                  <div class="text-medium">Belum Tersedia</div>
-                </ng-template>
-                <div class="flex gap-1 items-center">
-                  <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
-                </div>
-              </div>
-              <ion-button *ngIf="barber.barber as b;" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
-                [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
-            </div>
-          </div>
-        </ng-container>
-
-        <ng-template #noBarbers>
-          <div class="ion-text-center text-medium">Tidak ada barber di wilayah anda</div>
-        </ng-template>
-      </div>
-    </div>
-    <div *ngSwitchCase="'barber'" class="h-full flex flex-col gap-3">
-      <div class="flex items-center ion-padding bg-primary text-on-primary rounded-xl">
-        <div class="flex-1">
-          <small>Selamat Datang</small>
-          <h4 class="ion-no-margin ion-text-capitalize">{{ userData.name || '-' }}</h4>
-          <div class="flex items-center gap-2 mt-1">
-            <!-- <div class="rounded-full" style="height: 10px; width: 10px;"></div> -->
-            <ng-container *ngIf="userData.barber?.workingHours[today] as wh">
-              <div *ngIf="wh.hourStart < hourNow && wh.hourEnd > hourNow && !wh.close; else close" class="bg-success text-on-success pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
-                <small>Barber Buka</small>
-              </div>
-
-              <ng-template #close>
-                <div class="bg-danger text-on-danger pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
-                  <small>Barber Tutup</small>
-                </div>
-              </ng-template>
-            </ng-container>
-            <!-- <small>Sedang {{userData.barber?.active? '' : 'Tidak'}} Aktif</small> -->
-          </div>
-        </div>
-        <div class="bg-background rounded-full" style="height: 66px; width: 66px;">
-          <img class="rounded-full" src="assets/images/test.webp">
-        </div>
-        <!-- <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'"
-          class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
-          <ion-icon slot="icon-only" [color]="userData.barber?.active? 'primary' : 'medium'" name="power"
-            style="font-size: 30pt; margin: 10px;"></ion-icon>
-        </ion-button> -->
-      </div>
-      <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
-        <div class="flex-1">
-          <small class="mb-2 text-medium">Alamat Barber</small>
-          <div class="ion-text-capitalize"><b>{{userData.address || '-' }}</b> </div>
-        </div>
-        <div class="text-sm flex items-center">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
-      </div>
-      <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
-        <div class="flex-1">
-          <small class="mb-2 text-medium">Harga per Orang</small>
-          <div class="ion-no-margin"><b>Rp. {{ (userData.barber?.price | number:'2.0') || 0 }},-</b></div>
-        </div>
-        <div class="text-sm flex items-center">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
-      </div>
-      <div>
-        <h4><b>Permintaan Pemesanan</b></h4>
-        <div>
-          <div *ngIf="(orders$ | async) as orders">
-            <ng-container *ngIf="orders.length > 0; else noOrder">
-              <div *ngFor="let order of orders" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
-                <div class="flex items-center gap-3 ion-margin-bottom">
-                  <div class="bg-primary rounded-full" style="height: 40px; width: 40px;">
-                    <img class="rounded-full" src="assets/images/test.webp">
+                <div class="flex-1">
+                  <div class="ion-text-capitalize"><b>{{ barber.name }}</b></div>
+                  <div *ngIf="barber.barber?.workingHours![today] as wh;">
+                    <small *ngIf="!wh.close && wh.hourStart < hourNow && wh.hourEnd > hourNow; else close">
+                      {{wh.hourStart | date:'HH:mm'}} - {{wh.hourEnd | date:'HH:mm'}}
+                    </small>
+                    <ng-template #close>
+                      <span class="text-danger">(Tutup)</span>
+                    </ng-template>
                   </div>
-                  <div class="flex-1">
-                    <div class="ion-text-capitalize"><b>{{order.user?.name || '-'}}</b></div>
-                    <!-- <div class="text-medium"><small>082445887849</small></div> -->
-                    <div class="truncate-2">
-                      <small>{{order.user?.address || '-'}}</small>
+                  <div class="text-medium"><small>{{ barber.address }}</small></div>
+                </div>
+                <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
+              </div>
+              <hr class="bg-light mt-3 mb-3">
+              <div class="flex gap-3 items-center -mb-1">
+                <div class="flex-1" [routerLink]="'/detail-barber/' + barber.id">
+                  <div *ngIf="barber.barber?.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
+                      {{price | number:'2.0'}},-</b></div>
+                  <ng-template #noPrice>
+                    <div class="text-medium">Belum Tersedia</div>
+                  </ng-template>
+                  <div class="flex gap-1 items-center">
+                    <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+                  </div>
+                </div>
+                <ion-button *ngIf="barber.barber as b;" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
+                  [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
+              </div>
+            </div>
+          </ng-container>
+  
+          <ng-template #noBarbers>
+            <div class="ion-text-center text-medium">Tidak ada barber di wilayah anda</div>
+          </ng-template>
+        </div>
+      </div>
+      <div *ngSwitchCase="'barber'" class="h-full flex flex-col gap-3">
+        <div class="flex items-center ion-padding bg-primary text-on-primary rounded-xl">
+          <div class="flex-1">
+            <small>Selamat Datang</small>
+            <h4 class="ion-no-margin ion-text-capitalize">{{ userData.name || '-' }}</h4>
+            <div class="flex items-center gap-2 mt-1">
+              <!-- <div class="rounded-full" style="height: 10px; width: 10px;"></div> -->
+              <ng-container *ngIf="userData.barber?.workingHours![today] as wh">
+                <div *ngIf="wh.hourStart < hourNow && wh.hourEnd > hourNow && !wh.close; else close" class="bg-success text-on-success pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
+                  <small>Barber Buka</small>
+                </div>
+  
+                <ng-template #close>
+                  <div class="bg-danger text-on-danger pl-2 pr-2 rounded-xl" style="padding-bottom: 2px;">
+                    <small>Barber Tutup</small>
+                  </div>
+                </ng-template>
+              </ng-container>
+              <!-- <small>Sedang {{userData.barber?.active? '' : 'Tidak'}} Aktif</small> -->
+            </div>
+          </div>
+          <div class="bg-background rounded-full" style="height: 66px; width: 66px;">
+            <img class="rounded-full" src="assets/images/test.webp">
+          </div>
+          <!-- <ion-button [ngClass]="userData.barber?.active? 'bg-on-primary' : 'bg-light'"
+            class="ion-no-margin ion-no-padding flex rounded-full" style="height: auto;" (click)="activateDeactivate()">
+            <ion-icon slot="icon-only" [color]="userData.barber?.active? 'primary' : 'medium'" name="power"
+              style="font-size: 30pt; margin: 10px;"></ion-icon>
+          </ion-button> -->
+        </div>
+        <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
+          <div class="flex-1">
+            <small class="mb-2 text-medium">Alamat Barber</small>
+            <div class="ion-text-capitalize"><b>{{userData.address || '-' }}</b> </div>
+          </div>
+          <div class="text-sm flex items-center" (click)="modalUpdateAddress.present()">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
+        </div>
+        <div class="ion-padding border border-light rounded-xl flex items-center gap-2">
+          <div class="flex-1">
+            <small class="mb-2 text-medium">Harga per Orang</small>
+            <div class="ion-no-margin"><b>Rp. {{ (userData.barber?.price | number:'2.0') || 0 }},-</b></div>
+          </div>
+          <div class="text-sm flex items-center" (click)="modalUpdatePrice.present()">Ubah <ion-icon name="chevron-forward-outline"></ion-icon></div>
+        </div>
+        <div>
+          <h4><b>Permintaan Pemesanan</b></h4>
+          <div>
+            <div *ngIf="(orders$ | async) as orders">
+              <ng-container *ngIf="orders.length > 0; else noOrder">
+                <div *ngFor="let order of orders" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
+                  <div class="flex items-center gap-3 ion-margin-bottom">
+                    <div class="bg-primary rounded-full" style="height: 40px; width: 40px;">
+                      <img class="rounded-full" src="assets/images/test.webp">
+                    </div>
+                    <div class="flex-1">
+                      <div class="ion-text-capitalize"><b>{{order.user?.name || '-'}}</b></div>
+                      <!-- <div class="text-medium"><small>082445887849</small></div> -->
+                      <div class="truncate-2">
+                        <small>{{order.user?.address || '-'}}</small>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="ion-margin-bottom flex items-center gap-3">
-                  <div class="flex-1">
-                    <small class="text-medium">Harga</small>
-                    <div class="text-primary"><b>Rp. {{order.price | number:'2.0'}},-</b></div>
+                  <div class="ion-margin-bottom flex items-center gap-3">
+                    <div class="flex-1">
+                      <small class="text-medium">Harga</small>
+                      <div class="text-primary"><b>Rp. {{order.price | number:'2.0'}},-</b></div>
+                    </div>
+                    <div class="ion-text-right">
+                      <small class="text-medium">Jumlah</small>
+                      <div><b>{{order.amount || 1}} Orang</b></div>
+                    </div>
                   </div>
-                  <div class="ion-text-right">
-                    <small class="text-medium">Jumlah</small>
-                    <div><b>{{order.amount || 1}} Orang</b></div>
+                  <div class="flex items-center gap-3">
+                    <ion-button mode="ios" fill="outline" color="danger" class="ion-no-margin" (click)="rejectOrder(order.id)">
+                      <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                    <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full"
+                      (click)="acceptOrder(order.id)">Terima</ion-button>
                   </div>
                 </div>
-                <div class="flex items-center gap-3">
-                  <ion-button mode="ios" fill="outline" color="danger" class="ion-no-margin" (click)="rejectOrder(order.id)">
-                    <ion-icon name="close"></ion-icon>
-                  </ion-button>
-                  <ion-button mode="ios" fill="outline" color="primary" class="flex-1" class="ion-no-margin w-full"
-                    (click)="acceptOrder(order.id)">Terima</ion-button>
-                </div>
-              </div>
-            </ng-container>
+              </ng-container>
+            </div>
           </div>
+          <ng-template #noOrder>
+            <div class="text-medium ion-text-center ion-padding border border-light rounded-xl">
+              Tidak ada permintaan pemesanan terbaru
+            </div>
+          </ng-template>
         </div>
-        <ng-template #noOrder>
-          <div class="text-medium ion-text-center ion-padding border border-light rounded-xl">
-            Tidak ada permintaan pemesanan terbaru
+        <!-- <div class="flex-1 flex items-center justify-center">
+          <div>
+            <div class="ion-padding ion-margin-bottom flex border text-primary rounded-full">
+              <ion-icon name="power" style="font-size: 140pt;"></ion-icon>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+              <div class="bg-primary rounded-full" style="height: 15px; width: 15px;"></div> Sedang Aktif
+            </div>
           </div>
-        </ng-template>
+        </div> -->
       </div>
-      <!-- <div class="flex-1 flex items-center justify-center">
-        <div>
-          <div class="ion-padding ion-margin-bottom flex border text-primary rounded-full">
-            <ion-icon name="power" style="font-size: 140pt;"></ion-icon>
-          </div>
-          <div class="flex items-center justify-center gap-2">
-            <div class="bg-primary rounded-full" style="height: 15px; width: 15px;"></div> Sedang Aktif
-          </div>
-        </div>
-      </div> -->
-    </div>
-    <div *ngSwitchDefault>
-      Anda Tidak Dapat Mengakses Halaman Ini
-    </div>
+      <div *ngSwitchDefault>
+        Anda Tidak Dapat Mengakses Halaman Ini
+      </div>
+    </ng-container>
   </ng-container>
+  <ng-template #logout>
+    <ion-button mode="ios" color="warning" class="w-full" (click)="signingout()">Keluar</ion-button>
+  </ng-template>
 </ion-content>
 
 <!-- <div class="ion-padding border border-light rounded-xl">
@@ -371,5 +376,59 @@
         </ion-item>
       </ion-list>
     </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="md" #modalUpdateAddress class="no-handle modal-bottom-custom"
+  style="--max-height: 310px;">
+  <ng-template>
+    <ion-header class="ion-no-border drop-shadow-sm">
+      <ion-toolbar>
+        <ion-title class="ion-no-padding">Ubah Alamat Barber</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modalUpdateAddress.dismiss()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-item class="border rounded-xl">
+        <ion-label position="stacked">Alamat</ion-label>
+        <ion-textarea #address placeholder="Tuliskan alamat barber anda" [value]="userData.address" rows="5"></ion-textarea>
+      </ion-item>
+    </ion-content>
+    <ion-footer mode="ios" class="grid grid-cols-2 gap-2 ion-padding">
+      <ion-button fill="outline" (click)="modalUpdateAddress.dismiss()">Batal</ion-button>
+      <ion-button [disabled]="!address.value" (click)="updateAddress(modalUpdateAddress, address.value || '')">Simpan</ion-button>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="md" #modalUpdatePrice class="no-handle modal-bottom-custom"
+  style="--max-height: 224px;">
+  <ng-template>
+    <ion-header class="ion-no-border drop-shadow-sm">
+      <ion-toolbar>
+        <ion-title class="ion-no-padding">Ubah Harga Per Orang</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modalUpdatePrice.dismiss()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-item class="border rounded-xl">
+        <div slot="start" class="border-r ion-padding-end ion-no-margin mr-2">Rp</div>
+        <ion-input #price type="number" placeholder="Tuliskan alamat barber anda" class="ion-margin-start" [value]="userData.barber.price"></ion-input>
+      </ion-item>
+    </ion-content>
+    <ion-footer mode="ios" class="grid grid-cols-2 gap-2 ion-padding">
+      <ion-button fill="outline" (click)="modalUpdatePrice.dismiss()">Batal</ion-button>
+      <ion-button [disabled]="!price.value" (click)="updatePrice(modalUpdatePrice, price.value)">Simpan</ion-button>
+    </ion-footer>
   </ng-template>
 </ion-modal>

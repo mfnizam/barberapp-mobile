@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '@core/interfaces/user.interface';
+import { Barber, User } from '@core/interfaces/user.interface';
+import { UserService } from '@core/services/user.service';
 import { environment } from '@environment/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { Order } from '../pesanan/pesanan.interface';
 import { GetBarbersParameter, GetBarbersResponse, GetOrdersParameter, GetOrdersResponse } from './beranda.interface';
 
@@ -20,7 +21,8 @@ export class BerandaService {
   get orders$(): Observable<Order[]> { return this._orders.asObservable() }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private user: UserService
   ) { }
 
   getBarbers({ name, sortBy = 'name', limit = 10, page = 1 }: GetBarbersParameter): Observable<GetBarbersResponse> {
@@ -57,5 +59,23 @@ export class BerandaService {
 
   acceptOrder(orderId: string): Observable<Order>{
     return this.http.patch<Order>(environment.serverUrl + '/orders/' + orderId, { status: 1 })
+  }
+
+  updateBarberAddress(userId: any, address: string){
+    return this.http.patch<User>(environment.serverUrl + '/users/' + userId, { address })
+    .pipe(
+      switchMap(response => {
+        this.user.setUser(response);
+        return of(response)
+      }));
+  }
+
+  updateBarberPrice(userId: any, price: number){
+    return this.http.patch<User>(environment.serverUrl + '/barbers/' + userId, { price })
+    .pipe(
+      switchMap(response => {
+        this.user.setUser(response);
+        return of(response)
+      }));
   }
 }

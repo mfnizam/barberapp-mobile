@@ -8,6 +8,7 @@ export interface Order {
   amount: number;
   price: number;
   review: Review;
+  status: number;
 }
 
 export interface CreateOrderParameter {
@@ -18,11 +19,11 @@ export interface CreateOrderParameter {
 }
 
 export interface GetOrdersResponse {
-  results: Order[],
-  page: number,
-  limit: number,
-  totalPages: number,
-  totalResults: number
+  results: Order[];
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalResults: number;
 }
 
 export interface GetOrdersParameter {

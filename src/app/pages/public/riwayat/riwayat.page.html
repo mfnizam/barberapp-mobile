@@ -49,7 +49,7 @@
             </div>
             <div class="ion-text-right">
               <small class="text-medium">Status</small>
-              <div [ngClass]="order.status == 2? 'text-success' : 'text-danger'">
+              <div [ngClass]="order.status === 2? 'text-success' : 'text-danger'">
                 <b>{{order.status == 2? 'Selesai' : 'Batal'}}</b>
               </div>
             </div>
@@ -93,7 +93,7 @@
       <ion-content class="ion-padding">
         <form [formGroup]="formReview" (submit)="sendReview(modalReview)">
           <div class="ion-margin-bottom flex items-center justify-center gap-1">
-            <ion-icon *ngFor="let s of [1,2,3,4,5]" color="warning" [name]="formReview.get('star').value > (s - 1)? 'star' : 'star-outline'" style="font-size: 28pt;" (click)="formReview.get('star').setValue(s)"></ion-icon>
+            <ion-icon *ngFor="let s of [1,2,3,4,5]" color="warning" [name]="formReview.get('star')!.value > (s - 1)? 'star' : 'star-outline'" style="font-size: 28pt;" (click)="formReview.get('star')!.setValue(s)"></ion-icon>
           </div>
           <ion-item class="border rounded-xl ion-margin-bottom">
             <ion-label position="stacked">Review</ion-label>
