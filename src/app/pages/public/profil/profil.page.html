@@ -34,9 +34,24 @@
         </ion-item>
         <ion-item class="ion-margin-end">
           <ion-label position="stacked" color="medium">Jenis Kelamin</ion-label>
-          <div style="min-height: 35px; padding: 8px 0">{{profil.gender < 0? '-' : profil.gender? 'Laki - Laki'
+          <div style="min-height: 35px; padding: 8px 0">{{(profil.gender || -1) < 0? '-' : profil.gender? 'Laki - Laki'
               : 'Perempuan' }}</div>
         </ion-item>
+        <ion-item *ngIf="profil.photoID; else noPhotoID" class="ion-margin-end">
+          <ion-label position="stacked" color="medium">Status Akun</ion-label>
+          <div class="w-full flex items-center gap-2" style="min-height: 35px; padding: 8px 0">
+            <div class="flex-1">Terverifikasi</div>
+            <div class="text-primary" (click)="showPhotoID(verifikasiModal, profil.photoID)"><small>Lihat ID</small></div>
+          </div>
+        </ion-item>
+        <ng-template #noPhotoID>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-button fill="outline" mode="ios" class="w-full ion-no-margin" (click)="openModalVerifikasi(verifikasiModal)">
+              <b>Verifikasi Profil Anda</b>
+              <ion-icon name="id-card-outline" class="ml-2"></ion-icon>
+            </ion-button>
+          </div>
+        </ng-template>
         <div class="ion-padding">
           <ion-button mode="ios" class="w-full ion-no-margin" routerLink="/ubah-profil">
             <b>Ubah Profil</b>
@@ -110,4 +125,41 @@
       <ion-icon name="log-out-outline" class="ml-2"></ion-icon>
     </ion-button>
   </div>
+
+  <ion-modal #verifikasiModal (didDismiss)="dismissVerifikasi()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title><b>{{titleModalVerifikasi}}</b></ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="h-full flex flex-col">
+          <div class="flex-1 flex items-center">
+            <!-- <img id="crop" [src]="imgUbahFoto" alt="fotocrop" class="h-full object-contain"  style=" display: block; max-width: 100%;"> -->
+            <ion-img *ngIf="imgVerifikasi; else noImg" [src]="imgVerifikasi" class="w-full h-full"></ion-img>
+            <ng-template #noImg>
+              <div>
+                <ul>
+                  <li>Pilih dan Unggah foto KTP anda untuk verifikasi akun anda</li>
+                  <li>Pastikan foto KTP jelas dan semua huruf dan angka mudah dibaca</li>
+                  <li>Max Ukuran gambar adalah 2MB</li>
+                </ul>
+                <div class="ion-padding">
+                  <ion-button mode="ios" class="w-full ion-no-margin" (click)="pilihPhoto()">Pilih Foto</ion-button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="ion-padding flex items-center gap-3">
+            <ion-button mode="ios" fill="outline" class="w-full ion-no-margin" (click)="batalVerifikasi(verifikasiModal)">{{viewOnliModalVerifikasi? 'Tutup' : 'Batal'}}</ion-button>
+            <ion-button *ngIf="!viewOnliModalVerifikasi" mode="ios" class="w-full ion-no-margin" (click)="simpanVerifikasi(verifikasiModal)">
+              <b [class.opacity-0]="verifikasiLoading">Simpan</b>
+              <ion-spinner [class.opacity-0]="!verifikasiLoading" class="absolute"></ion-spinner>
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

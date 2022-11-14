@@ -12,11 +12,19 @@ export class UserService {
 
   get user$(): Observable<User>{ return this._user.asObservable(); }
 
-  set user(value: User) { this._user.next(value); }
+  set user(value: User) { 
+    this.storage.set('user', value);
+    this._user.next(value); 
+  }
   get user(): (User) { return this._user.getValue() }
 
-  setUser(user: User): Promise<any> { return this.storage.set('user', user) }
-  getUser(): Promise<any> { return this.storage.get('user') }
+  setUser(user: User): Promise<any> { 
+    this.user = user;
+    return this.storage.set('user', user) 
+  }
+  getUser(): Promise<any> { 
+    return this.storage.get('user') 
+  }
 
   constructor(
     private storage: StorageService

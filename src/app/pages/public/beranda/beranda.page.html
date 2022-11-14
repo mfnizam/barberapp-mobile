@@ -140,6 +140,9 @@
                         <small>{{order.user?.address || '-'}}</small>
                       </div>
                     </div>
+                    <div class="text-primary" (click)="showPhotoID(verifikasiModal, order.user?.photoID)">
+                      <small>Lihat ID</small>
+                    </div>
                   </div>
                   <div class="ion-margin-bottom flex items-center gap-3">
                     <div class="flex-1">
@@ -430,5 +433,29 @@
       <ion-button fill="outline" (click)="modalUpdatePrice.dismiss()">Batal</ion-button>
       <ion-button [disabled]="!price.value" (click)="updatePrice(modalUpdatePrice, price.value)">Simpan</ion-button>
     </ion-footer>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #verifikasiModal (didDismiss)="dismissVerifikasi()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title><b>Foto ID (KTP) Pelanggan</b></ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="h-full flex flex-col">
+        <div class="w-full flex-1 flex items-center">
+          <!-- <img id="crop" [src]="imgUbahFoto" alt="fotocrop" class="h-full object-contain"  style=" display: block; max-width: 100%;"> -->
+          <ion-img *ngIf="imgVerifikasi; else noImg" [src]="imgVerifikasi" class="w-full h-full"></ion-img>
+          <ng-template #noImg>
+            <div class="w-full ion-padding ion-text-center">Pelanggan Belum Terverifikasi</div>
+          </ng-template>
+        </div>
+        <div class="ion-padding flex items-center gap-3">
+          <ion-button mode="ios" fill="outline" class="w-full ion-no-margin" (click)="verifikasiModal.dismiss()">Tutup</ion-button>
+        </div>
+      </div>
+    </ion-content>
   </ng-template>
 </ion-modal>

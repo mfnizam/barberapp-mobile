@@ -6,11 +6,13 @@ export interface User {
   phoneNumber  ?: string;
   address       : string;
   email 				: string;
+  photoID       : string;
   role          : string;
   barber        : Barber; // it can be multiple inteface
 }
 
 export interface Barber {
+  id            ?: any;
   active        ?: boolean;
   price         : number;
   detail        : string;

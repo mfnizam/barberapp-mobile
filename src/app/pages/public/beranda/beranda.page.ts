@@ -22,6 +22,8 @@ export class BerandaPage {
 
   orders$: Observable<Order[]> = new BehaviorSubject<Order[]>([] as Order[]);
 
+  imgVerifikasi: string | null = null;
+
   constructor(
     private navCtrl: NavController,
     private beranda: BerandaService,
@@ -111,10 +113,18 @@ export class BerandaPage {
       })
   }
 
-
   async signingout(){
     await this.auth.signOut();
     this.navCtrl.navigateRoot(['/auth'], { animationDirection: 'forward' })
+  }
+
+  showPhotoID(modal: any, photo: any){
+    modal.present();
+    // this.imgVerifikasi = photo;
+  }
+
+  dismissVerifikasi(){
+    this.imgVerifikasi = null;
   }
 
   async showToast(message = 'Terjadi Kesalahan', color = 'danger') {

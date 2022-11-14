@@ -10,6 +10,7 @@ import { UbahBarberService } from './ubah-barber.service';
   templateUrl: './ubah-barber.page.html'
 })
 export class UbahBarberPage {
+  updateLoading = false;
 
   workingHours: FormArray = this.formBuilder.array([
     this.formBuilder.group({

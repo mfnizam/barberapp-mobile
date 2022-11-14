@@ -9,6 +9,7 @@ export interface Order {
   price: number;
   review: Review;
   status: number;
+  orderAt?: Date;
 }
 
 export interface CreateOrderParameter {
@@ -38,7 +39,8 @@ export interface Review{
   barber: Barber,
   user: User,
   star: number,
-  content: string
+  content: string,
+  reviewAt?: Date,
 }
 
 export interface CreateReviewParameter{

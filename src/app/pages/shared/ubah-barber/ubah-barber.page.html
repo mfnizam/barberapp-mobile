@@ -47,17 +47,17 @@
                       <ion-select-option [value]="true">Tutup</ion-select-option>
                     </ion-select>
                   </ion-item>
-                  <div *ngIf="!workingHours.controls[i].get('close').value"
+                  <div *ngIf="!workingHours.controls[i].get('close')?.value"
                     class="w-full grid grid-cols-2 gap-3 ion-padding-start ion-padding-end ion-padding-bottom"
                     style="font-size: 14pt;">
                     <div (click)="openModalHourStart(modalHourStarEnd, i)">
                       <small class="text-medium">Jam Buka</small>
-                      <div class="text-primary"><b>{{(workingHours.controls[i].get('hourStart').value | date:'HH:mm') ||
+                      <div class="text-primary"><b>{{(workingHours.controls[i].get('hourStart')?.value | date:'HH:mm') ||
                           '-'}}</b></div>
                     </div>
                     <div class="ion-text-right" (click)="openModalHourEnd(modalHourStarEnd, i)">
                       <small class="text-medium">Jam Tutup</small>
-                      <div class="text-primary"><b>{{(workingHours.controls[i].get('hourEnd').value | date:'HH:mm') ||
+                      <div class="text-primary"><b>{{(workingHours.controls[i].get('hourEnd')?.value | date:'HH:mm') ||
                           '-'}}</b></div>
                     </div>
                   </div>
