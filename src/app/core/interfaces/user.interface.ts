@@ -17,6 +17,7 @@ export interface Barber {
   price         : number;
   detail        : string;
   workingHours  : WorkingHours[];
+  star         ?: number;
 }
 
 export interface WorkingHours { 

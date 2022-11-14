@@ -39,7 +39,7 @@ export class BerandaService {
       }))
   }
 
-  getOrders({ status = 0, sortBy = 'createAt', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
+  getOrders({ status = 0, sortBy = '-orderAt', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
     return this.http.get<GetOrdersResponse>(environment.serverUrl + '/orders', {
       params: {
         status,

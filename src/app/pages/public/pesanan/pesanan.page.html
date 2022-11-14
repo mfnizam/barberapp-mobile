@@ -14,14 +14,21 @@
   <div *ngIf="(orders$ | async) as orders">
     <ng-container *ngIf="orders.length > 0; else noOrders">
       <div mode="ios" *ngFor="let order of orders; trackBy: trackByFn"
-        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl">
+        class="ion-padding bg-background drop-shadow-lg items-center rounded-xl ion-margin-bottom">
         <div [routerLink]="'/detail-pemesanan/' + order.id">
           <div class="flex justify-between">
             <div class="flex-1">
-              <small class="text-medium">Nama {{userData.role == 'user'? 'Barber' : 'Pelanggan'}}</small>
-              <h5 class="ion-no-margin mb-2 font-bold ion-text-capitalize">
-                {{(userData.role == 'user'? order.barber?.name : order.user?.name) || '-'}}
-              </h5>
+              <div class="flex">
+                <div class="flex-1">
+                  <small class="text-medium">Nama {{userData.role == 'user'? 'Barber' : 'Pelanggan'}}</small>
+                  <h5 class="ion-no-margin mb-2 font-bold ion-text-capitalize">
+                    {{(userData.role == 'user'? order.barber?.name : order.user?.name) || '-'}}
+                  </h5>
+                </div>
+                <div class="text-medium">
+                  <small>{{ order.orderAt | date:'dd MMM YYYY'}}</small>
+                </div>
+              </div>
               <div *ngIf="userData.role == 'user'">{{order.barber?.address || '-'}}</div>
             </div>
             <!-- <div class="text-right">

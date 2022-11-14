@@ -21,9 +21,9 @@
       <div class="bg-background rounded-xl drop-shadow-lg" style="padding-top: 71px; overflow: hidden;">
         <div class="text-center" style="margin-bottom: 30px ;">
           <div class="flex gap-1 justify-center mb-1">
-            <ion-icon *ngFor="let s of [1, 1, 1, 1, 0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+            <ion-icon *ngFor="let s of [1,2,3,4,5]" [color]="s <= star? 'warning' : 'medium'" name="star"></ion-icon>
           </div>
-          <div class="text-xl font-bold ion-text-capitalize">{{barber.name}}</div>
+          <div class="text-xl font-bold ion-text-capitalize">{{barber.name}}<ion-icon *ngIf="barber.photoID" name="shield-checkmark-outline" color="primary" class="ml-2" style="margin-bottom: -3px; font-size: 14pt;"></ion-icon></div>
           <div class="text-medium text-sm">{{barber.address}}</div>
           <div class="text-medium text-sm">{{barber.phoneNumber || '-'}}</div>
         </div>

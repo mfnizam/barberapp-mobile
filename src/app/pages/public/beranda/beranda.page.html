@@ -43,7 +43,7 @@
                   <img src="assets/images/test.webp" alt="">
                 </div>
                 <div class="flex-1">
-                  <div class="ion-text-capitalize"><b>{{ barber.name }}</b></div>
+                  <div class="ion-text-capitalize"><b>{{ barber.name }}</b> <ion-icon *ngIf="barber.photoID" name="shield-checkmark-outline" color="primary" class="-mb-1 ml-2" style="font-size: 14pt;"></ion-icon></div>
                   <div *ngIf="barber.barber?.workingHours![today] as wh;">
                     <small *ngIf="!wh.close && wh.hourStart < hourNow && wh.hourEnd > hourNow; else close">
                       {{wh.hourStart | date:'HH:mm'}} - {{wh.hourEnd | date:'HH:mm'}}
@@ -57,18 +57,18 @@
                 <ion-icon name="chevron-forward" style="font-size: 14pt;"></ion-icon>
               </div>
               <hr class="bg-light mt-3 mb-3">
-              <div class="flex gap-3 items-center -mb-1">
+              <div *ngIf="barber.barber as b;" class="flex gap-3 items-center -mb-1">
                 <div class="flex-1" [routerLink]="'/detail-barber/' + barber.id">
-                  <div *ngIf="barber.barber?.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
+                  <div *ngIf="b?.price as price; else noPrice" class="flex-1 flex-shrink-0 text-primary mb-1"><b>Rp
                       {{price | number:'2.0'}},-</b></div>
                   <ng-template #noPrice>
                     <div class="text-medium">Belum Tersedia</div>
                   </ng-template>
                   <div class="flex gap-1 items-center">
-                    <ion-icon *ngFor="let s of [1,1,1,1,0]" [color]="s? 'warning' : 'medium'" name="star"></ion-icon>
+                    <ion-icon *ngFor="let s of [1,2,3,4,5]" [color]="s <= (b.star || 0)? 'warning' : 'medium'" name="star"></ion-icon>
                   </div>
                 </div>
-                <ion-button *ngIf="barber.barber as b;" mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
+                <ion-button mode="ios" [disabled]="!b.price || b.workingHours[today].close || b.workingHours[today].hourStart > hourNow || b.workingHours[today].hourEnd < hourNow" class="w-full ion-no-margin" style="max-width: 150px;"
                   [routerLink]="'/pesan-sekarang/' + barber.id">Pesan Sekarang</ion-button>
               </div>
             </div>
@@ -129,20 +129,21 @@
             <div *ngIf="(orders$ | async) as orders">
               <ng-container *ngIf="orders.length > 0; else noOrder">
                 <div *ngFor="let order of orders" class="ion-margin-bottom bg-background drop-shadow-lg rounded-xl ion-padding">
-                  <div class="flex items-center gap-3 ion-margin-bottom">
+                  <div class="flex gap-3 ion-margin-bottom">
                     <div class="bg-primary rounded-full" style="height: 40px; width: 40px;">
                       <img class="rounded-full" src="assets/images/test.webp">
                     </div>
                     <div class="flex-1">
-                      <div class="ion-text-capitalize"><b>{{order.user?.name || '-'}}</b></div>
+                      <div class="ion-text-capitalize"><b>{{order.user?.name || '-'}}</b><ion-icon *ngIf="order.user?.photoID" name="shield-checkmark-outline" color="primary" class="ml-2" style="margin-bottom: -3px; font-size: 14pt;"></ion-icon></div>
                       <!-- <div class="text-medium"><small>082445887849</small></div> -->
                       <div class="truncate-2">
                         <small>{{order.user?.address || '-'}}</small>
                       </div>
                     </div>
-                    <div class="text-primary" (click)="showPhotoID(verifikasiModal, order.user?.photoID)">
-                      <small>Lihat ID</small>
-                    </div>
+                    <div class="text-medium"><small>{{ order.orderAt | date:'dd MMM YYYY'}}</small></div>
+                    <!-- <div class="text-primary" (click)="showPhotoID(verifikasiModal, order.user?.photoID)">
+                      <small>Terverifikasi</small>
+                    </div> -->
                   </div>
                   <div class="ion-margin-bottom flex items-center gap-3">
                     <div class="flex-1">

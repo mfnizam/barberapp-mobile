@@ -19,7 +19,7 @@ export class PesananService {
     return this.orders.asObservable()
   }
 
-  getOrders({ sortBy = 'createdAt', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
+  getOrders({ sortBy = '-createdAt', limit = 10, page = 1 }: GetOrdersParameter): Observable<GetOrdersResponse> {
     return this.http.get<GetOrdersResponse>(environment.serverUrl + '/orders', {
       params: {
         status: JSON.stringify({ $lt: 2 }),
